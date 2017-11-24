@@ -1,5 +1,7 @@
 class EnemiesController < ApplicationController
-  require 'enemy_personality_module'
+  require 'modules/enemy_personality_module'
+  require 'seeds'
+  include LoadCSV
   include EnemyPersonalityModule
 
   before_action :set_enemy, only: [:show, :edit, :update, :destroy]
@@ -13,6 +15,8 @@ class EnemiesController < ApplicationController
   # GET /enemies/1
   # GET /enemies/1.json
   def show
+    LoadCSV::Seeds.run
+    @personality_master = PersonalityMaster.all
   end
 
   # GET /enemies/new

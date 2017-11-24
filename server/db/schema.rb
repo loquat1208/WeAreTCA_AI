@@ -10,21 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116024345) do
+ActiveRecord::Schema.define(version: 20171124072104) do
 
-  create_table "enemies", force: :cascade do |t|
-    t.float "power"
-    t.float "speed"
-    t.float "hp"
+  create_table "enemies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float "power", limit: 24
+    t.float "speed", limit: 24
+    t.float "hp", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "personality"
   end
 
-  create_table "players", force: :cascade do |t|
-    t.float "power"
-    t.float "speed"
-    t.float "hp"
+  create_table "personality_masters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "players", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float "power", limit: 24
+    t.float "speed", limit: 24
+    t.float "hp", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
