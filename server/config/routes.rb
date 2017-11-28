@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :enemies
   resources :players
+  resources :masters
 
   root 'main#index'
 
@@ -20,6 +21,8 @@ Rails.application.routes.draw do
         get :info
       end
     end
-
+    
+    resources :masters, only: [:index] do
+    end
   end
 end

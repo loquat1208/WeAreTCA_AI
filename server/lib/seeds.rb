@@ -17,7 +17,7 @@ class Seeds
   MASTER_DIR = Rails.root.join("db", "masters", "csv")
   
   ATTRS = {
-    personality_masters: [:code, :name]
+    personality_masters: [:code, :name,]
   }
 
   def run
@@ -93,7 +93,6 @@ class Seeds
     tmp_model = clazz.new
     each_line_from_csv(filename) do |line|
       line = line.map{ |h, f| f.try(:strip).try(:gsub, /\r/, "") }
-      print "CSV VALUE = #{line}"
       options = {}
       attrs.each_with_index do |attr, i|
         # NOTE: INSERT_ATTRSのカラムが本当にあるかチェックを入れた
