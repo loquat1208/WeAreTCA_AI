@@ -1,19 +1,19 @@
-﻿using UnityEngine;
-
-namespace AI.Player
+﻿namespace AI.Player
 {
     public class PlayerModel
     {
-        public int Power { get; set; }
-        public int Speed { get; set; }
-        public int Hp { get; set; }
-        public Vector3 Pos { get; set; }
+        private const int power = 100;
+        private const int maxHp = 100;
+        private const int maxMp = 100;
+        private const int speed = 1;
 
-        public PlayerModel(int power, int speed, int hp)
+        public int Hp { get; set; }
+        public int Mp { get; set; }
+
+        public PlayerModel()
         {
-            Power = power;
-            Speed = speed;
-            Hp = hp;
+            Hp = maxHp;
+            Mp = maxMp;
         }
     }
 }
