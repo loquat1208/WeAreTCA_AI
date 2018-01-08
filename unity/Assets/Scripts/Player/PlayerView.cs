@@ -15,5 +15,16 @@ namespace AI.Player
                     .AsObservable();
             }
         }
+
+        public IObservable<bool> OnAttackKey
+        {
+            get
+            {
+                return Observable.EveryUpdate()
+                    .Select(_ => Input.GetButtonDown("Fire1"))
+                    .Where(isAttack => isAttack)
+                    .AsObservable();
+            }
+        }
     }
 }
