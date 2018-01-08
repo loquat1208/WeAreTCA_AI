@@ -31,11 +31,11 @@
         
         public AIModel()
         {
-            this.subject = Subject.Enemy;
-            this.criterion = Criterion.Hp;
-            this.from = 0;
-            this.to = 100;
-            this.behavior = Behavior.None;
+            subject = Subject.Enemy;
+            criterion = Criterion.Hp;
+            from = 0;
+            to = 100;
+            behavior = Behavior.None;
         }
 
         public AIModel(Subject subject, Criterion criterion, float from, float to, Behavior behavior)
