@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using UniRx;
 
 namespace AI.Player
@@ -6,6 +7,8 @@ namespace AI.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerView view;
+        // NOTO: Prefab化してResourceフォルダーから呼ぶか決めないと
+        [SerializeField] private GameObject attackTrigger;
 
         public PlayerModel Model { get; set; }
 
@@ -15,12 +18,27 @@ namespace AI.Player
         {
             Model = new PlayerModel();
             view.OnDirKey.Subscribe(OnMove);
+            view.OnAttackKey.Subscribe(isAttack =>
+            {
+                OnAttack();
+            });
         }
 
         private void OnMove(Vector3 dir)
         {
             rigid.velocity = dir * Model.Speed;
             rigid.rotation = Quaternion.LookRotation(dir);
+        }
+
+        private void OnAttack()
+        {
+            attackTrigger.SetActive(true);
+            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(_ => OnStay()).AddTo(this);
+        }
+
+        private void OnStay()
+        {
+            attackTrigger.SetActive(false);
         }
     }
 }
