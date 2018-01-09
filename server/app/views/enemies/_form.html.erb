@@ -12,11 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :personality %>
-    <%= form.select :personality, EnemyPersonalityModule::PERSONALITY_KIND, id: :enemy_personality %>
-  </div>
-
-  <div class="field">
     <%= form.label :power %>
     <%= form.text_field :power, id: :enemy_power %>
   </div>
