@@ -5,7 +5,6 @@
 <table>
   <thead>
     <tr>
-      <th>Personality</th>
       <th>Power</th>
       <th>Speed</th>
       <th>Hp</th>
@@ -16,7 +15,6 @@
   <tbody>
     <% @enemies.each do |enemy| %>
       <tr>
-        <td><%= EnemyPersonalityModule::PERSONALITY_KIND.invert[enemy.personality] %></td>
         <td><%= enemy.power %></td>
         <td><%= enemy.speed %></td>
         <td><%= enemy.hp %></td>

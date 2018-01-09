@@ -17,7 +17,7 @@ class Seeds
   MASTER_DIR = Rails.root.join("db", "masters", "csv")
   
   ATTRS = {
-    personality_masters: [:code, :name,]
+    personality_masters: [:code, :name, :hp,]
   }
 
   def run

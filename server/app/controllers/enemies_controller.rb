@@ -1,6 +1,4 @@
 class EnemiesController < ApplicationController
-  require 'modules/enemy_personality_module'
-  include EnemyPersonalityModule
 
   before_action :set_enemy, only: [:show, :edit, :update, :destroy]
 
