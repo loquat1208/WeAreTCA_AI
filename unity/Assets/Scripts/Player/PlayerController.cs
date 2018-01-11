@@ -33,12 +33,17 @@ namespace AI.Player
         private void OnAttack()
         {
             attackTrigger.SetActive(true);
-            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(_ => OnStay()).AddTo(this);
+            Delay(1, OnStay);
         }
 
         private void OnStay()
         {
             attackTrigger.SetActive(false);
+        }
+
+        private void Delay(float time, Action onComplete = null)
+        {
+            Observable.Timer(TimeSpan.FromSeconds(time)).First().Subscribe(_ => onComplete.Invoke());
         }
     }
 }
