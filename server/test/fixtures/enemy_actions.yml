@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  executionOrder: 1
+  character: 1
+  parameter: 1
+  value: 1
+  comparision: 1
+  action: 1
+
+two:
+  executionOrder: 1
+  character: 1
+  parameter: 1
+  value: 1
+  comparision: 1
+  action: 1

@@ -18,6 +18,28 @@
         <td><%= enemy.power %></td>
         <td><%= enemy.speed %></td>
         <td><%= enemy.hp %></td>
+	<% if enemy.enemy_actions.nil? %>
+ 	  <% enemy.create_action %>
+        <% else %>
+          <tr>
+            <th>実行順番</th>
+            <th>参照人物</th>
+            <th>参照値</th>
+            <th>百分率</th>
+            <th>比較方法</th>
+            <th>行動</th>
+          </tr>
+          <% enemy.enemy_actions.each do |action| %>
+            <tr>
+              <td><%= action.executionOrder %></td>
+ 	      <td><%= action.character %></td>
+	      <td><%= action.parameter %></td>
+	      <td><%= action.value %></td>
+	      <td><%= action.comparision %></td>
+	      <td><%= action.action %></td>
+	    </tr>
+	  <% end %>
+	<% end %>
         <td><%= link_to 'Show', enemy %></td>
         <td><%= link_to 'Edit', edit_enemy_path(enemy) %></td>
         <td><%= link_to 'Destroy', enemy, method: :delete, data: { confirm: 'Are you sure?' } %></td>

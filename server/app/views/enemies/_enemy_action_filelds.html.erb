@@ -1,0 +1,11 @@
+<div class="nested-fields">
+  <td><%= f.number_field :executionOrder, class: 'form-control', id: :enemy_action_executionOrder %>
+  <td><%= f.select :character, {"自分" => 0, "勇者" => 1}, class: 'form-control' %>
+  <td><%= f.select :parameter, {"HP" => 0, "MP" => 1}, class: 'form-control' %>
+  <td><%= f.select :value, (0..100).to_a.map{|n| [n, n]}, class: 'form-control' %>
+  <td><%= f.select :comparision, {"以上" => 0, "より下" => 1}, class: 'form-control' %>
+  <td><%= f.select :action,  {"勇者を攻撃" => 0, "スキル" => 1, "勇者の正面に移動" =>2,
+                              "勇者の背後に移動" => 3, "勇者の右側に移動" => 4, "勇者の左側に移動" => 5,
+                              "勇者から25M離れる" => 6, "勇者から50M離れる" => 7, "勇者から75M離れる" => 8}, class: 'form-control' %>
+  <%= link_to_remove_association "delete", f %>
+</div>

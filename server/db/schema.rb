@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105025751) do
+ActiveRecord::Schema.define(version: 20180109032726) do
 
   create_table "enemies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.float "power", limit: 24
@@ -19,6 +19,19 @@ ActiveRecord::Schema.define(version: 20180105025751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "personality"
+  end
+
+  create_table "enemy_actions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "enemy_id"
+    t.integer "executionOrder"
+    t.integer "character"
+    t.integer "parameter"
+    t.integer "value"
+    t.integer "comparision"
+    t.integer "action"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_enemy_actions_on_enemy_id"
   end
 
   create_table "personality_masters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
