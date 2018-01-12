@@ -1,25 +1,13 @@
 Rails.application.routes.draw do
-  #サイト関連
-  get 'main/index'
-
   resources :enemies
-  resources :players
-
-  root 'main#index'
-
-  #API関連
+  root 'enemies#index'
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     resources :enemies, only: [:index] do
       collection do
-        get :info
+        get :actions
       end
     end
-
-    resources :players, only: [:index] do
-      collection do
-        get :info
-      end
-    end
-
   end
+
 end

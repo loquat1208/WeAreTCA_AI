@@ -1,14 +1,12 @@
 require 'json'
+
 class Api::EnemiesController < ApplicationController
   def index
-    @enemies = Enemy.all
-    render json: @enemies
+    render json: Enemy.all
   end
-  
-  def info
-    @enemies = Enemy.all
-    if !@enemies.nil?
-      render json: @enemies
-    end
+
+  def actions
+    @actions = Enemy.find_by(id: params[:enemy_id]).actions.all
+    render json: @actions
   end
 end

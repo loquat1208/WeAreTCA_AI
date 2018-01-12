@@ -1,13 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  personality: 
-  power: 1.5
-  speed: 1.5
-  hp: 1.5
+  power: 1
+  speed: 1
+  hp: 1
 
 two:
-  personality: 
-  power: 1.5
-  speed: 1.5
-  hp: 1.5
+  power: 1
+  speed: 1
+  hp: 1

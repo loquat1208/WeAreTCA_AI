@@ -1,38 +1,30 @@
-<%= form_for @enemy do |form| %>
-  <% if enemy.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(enemy.errors.count, "error") %> prohibited this enemy from being saved:</h2>
-
-      <ul>
-     <% enemy.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_for @enemy do |f| %>
   <div class="field">
-    <%= form.label :power %>
-    <%= form.text_field :power, id: :enemy_power %>
+    <%= f.label :power %>
+    <%= f.number_field :power, id: :enemy_power %>
   </div>
 
   <div class="field">
-    <%= form.label :speed %>
-    <%= form.text_field :speed, id: :enemy_speed %>
+    <%= f.label :speed %>
+    <%= f.number_field :speed, id: :enemy_speed %>
   </div>
 
   <div class="field">
-    <%= form.label :hp %>
-    <%= form.text_field :hp, id: :enemy_hp %>
+    <%= f.label :hp %>
+    <%= f.number_field :hp, id: :enemy_hp %>
   </div>
-  <div id="enemy_action" class="form-group">
-    <%= form.label :enemy_actions %>
-    <%= form.fields_for :enemy_actions do |action| %>
-      <%= render 'enemy_action_filelds', f: action %>
+  
+  <h3>Actions</h3>
+  <div id="actions">
+    <%= f.fields_for :actions do |action| %>
+      <%= render 'action_fields', f: action %>
     <% end %>
+    <div class="links">
+      <%= link_to_add_association 'add action', f, :actions %>
+    </div>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>

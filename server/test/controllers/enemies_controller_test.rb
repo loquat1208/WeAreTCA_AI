@@ -17,7 +17,7 @@ class EnemiesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create enemy" do
     assert_difference('Enemy.count') do
-      post enemies_url, params: { enemy: { hp: @enemy.hp, personality: @enemy.personality, power: @enemy.power, speed: @enemy.speed } }
+      post enemies_url, params: { enemy: { hp: @enemy.hp, power: @enemy.power, speed: @enemy.speed } }
     end
 
     assert_redirected_to enemy_url(Enemy.last)
@@ -34,7 +34,7 @@ class EnemiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update enemy" do
-    patch enemy_url(@enemy), params: { enemy: { hp: @enemy.hp, personality: @enemy.personality, power: @enemy.power, speed: @enemy.speed } }
+    patch enemy_url(@enemy), params: { enemy: { hp: @enemy.hp, power: @enemy.power, speed: @enemy.speed } }
     assert_redirected_to enemy_url(@enemy)
   end
 

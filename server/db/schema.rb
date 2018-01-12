@@ -10,44 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109032726) do
+ActiveRecord::Schema.define(version: 20180112030354) do
 
-  create_table "enemies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.float "power", limit: 24
-    t.float "speed", limit: 24
-    t.float "hp", limit: 24
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "personality"
-  end
-
-  create_table "enemy_actions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "enemy_id"
-    t.integer "executionOrder"
+  create_table "actions", force: :cascade do |t|
+    t.integer "execution"
     t.integer "character"
     t.integer "parameter"
     t.integer "value"
-    t.integer "comparision"
+    t.integer "comparison"
     t.integer "action"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_actions_on_enemy_id"
+  end
+
+  create_table "enemies", force: :cascade do |t|
+    t.integer "power"
+    t.integer "speed"
+    t.integer "hp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "enemy_actions", force: :cascade do |t|
+    t.integer "execution"
+    t.integer "character"
+    t.integer "parameter"
+    t.integer "value"
+    t.integer "comparison"
+    t.integer "action"
+    t.integer "enemy_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["enemy_id"], name: "index_enemy_actions_on_enemy_id"
-  end
-
-  create_table "personality_masters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "name"
-    t.integer "hp"
-  end
-
-  create_table "players", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.float "power", limit: 24
-    t.float "speed", limit: 24
-    t.float "hp", limit: 24
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

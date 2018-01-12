@@ -62,15 +62,13 @@ class EnemiesController < ApplicationController
   end
 
   private
-    def enemy_params
-      params.require(:enemy).permit(
-        :power, :speed, :hp,
-        enemy_actions_attributes:[:executionOrder,:character,:parameter,:value,:comparision,:action,:_destroy,:id]
-      )
-    end
- 
     # Use callbacks to share common setup or constraints between actions.
     def set_enemy
       @enemy = Enemy.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def enemy_params
+      params.require(:enemy).permit(:power, :speed, :hp, actions_attributes: [:id, :execution, :character, :parameter, :value, :comparison, :action, :_destroy])
     end
 end

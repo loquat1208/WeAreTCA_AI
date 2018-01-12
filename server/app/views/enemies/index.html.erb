@@ -3,53 +3,73 @@
 <h1>Enemies</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Power</th>
-      <th>Speed</th>
-      <th>Hp</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @enemies.each do |enemy| %>
+      <th>Enemy<%= enemy.id %></th>
       <tr>
-        <td><%= enemy.power %></td>
-        <td><%= enemy.speed %></td>
-        <td><%= enemy.hp %></td>
-	<% if enemy.enemy_actions.nil? %>
- 	  <% enemy.create_action %>
-        <% else %>
+        <th>Power</th>
+        <th>Speed</th>
+        <th>Hp</th>
+        </tr>
+      <tr>
+        <td align="center"><%= enemy.power %></td>
+        <td align="center"><%= enemy.speed %></td>
+        <td align="center"><%= enemy.hp %></td>
+        <tr>
+          <th>実行順番</th>
+          <th>参照ユニット</th>
+          <th>参照パラメーター</th>
+          <th>バーセンテージ</th>
+          <th>以上かより下か</th>
+          <th>動作</th>
+        </tr>
+        <% enemy.actions.each do |action| %>
           <tr>
-            <th>実行順番</th>
-            <th>参照人物</th>
-            <th>参照値</th>
-            <th>百分率</th>
-            <th>比較方法</th>
-            <th>行動</th>
-          </tr>
-          <% enemy.enemy_actions.each do |action| %>
-            <tr>
-              <td><%= action.executionOrder %></td>
- 	      <td><%= action.character %></td>
-	      <td><%= action.parameter %></td>
-	      <td><%= action.value %></td>
-	      <td><%= action.comparision %></td>
-	      <td><%= action.action %></td>
-	    </tr>
-	  <% end %>
-	<% end %>
-        <td><%= link_to 'Show', enemy %></td>
+            <td align="center"><%= action.execution %></td>
+            <% if action.character == 0 %>
+	      <td align="center">自分</td>
+	    <%else%>
+	      <td align="center">勇者</td>
+	    <%end%>
+            <% if action.parameter == 0 %>
+	      <td align="center">HP</td>
+	    <%else%>
+	      <td align="center">MP</td>
+	    <%end%>
+            <td align="center"><%= action.value %></td>
+            <% if action.comparison == 0 %>
+	      <td align="center">以上</td>
+	    <%else%>
+	      <td align="center">以下</td>
+	    <%end%>
+	    <%if action.action == 0 %>
+	      <td align="center">プレイヤーを攻撃する</td>
+            <%elsif action.action == 1 %>
+              <td align="center">スキルを使用する</td>
+            <%elsif action.action == 2 %>
+              <td align="center">プレイヤーの正面に移動する</td>
+            <%elsif action.action == 3 %>
+              <td align="center">プレイヤーの背後に移動する</td>
+            <%elsif action.action == 4 %>
+              <td align="center">プレイヤーの右側に移動する</td>
+            <%elsif action.action == 5 %>
+              <td align="center">プレイヤーの左側に移動する</td>
+            <%elsif action.action == 6 %>
+              <td align="center">プレイヤーの25M以外に移動する</td>
+            <%elsif action.action == 7 %>
+              <td align="center">プレイヤーの50M以外に移動する</td>
+            <%elsif action.action == 8 %>
+              <td align="center">プレイヤーの75M以外に移動する</td>
+	    <%end%>
+	  </tr>
+        <% end %>
         <td><%= link_to 'Edit', edit_enemy_path(enemy) %></td>
-        <td><%= link_to 'Destroy', enemy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Enemy', new_enemy_path %>
-<br>
-<%= link_to '戻る', root_path %>
+<% if @enemies.size < 5 %>
+ <%= link_to 'New Enemy', new_enemy_path %>
+<%end%>

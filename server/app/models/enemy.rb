@@ -1,4 +1,4 @@
 class Enemy < ApplicationRecord
-  has_many :enemy_actions
-  accepts_nested_attributes_for :enemy_actions, :allow_destroy => true
+  has_many :actions, inverse_of: :enemy
+  accepts_nested_attributes_for :actions, allow_destroy: true
 end
