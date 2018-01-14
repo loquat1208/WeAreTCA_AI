@@ -20,8 +20,8 @@ namespace AI.Unit.Player
         void Start()
         {
             Model = new PlayerModel();
-            view.OnDirKey.Subscribe(OnMove);
-            view.OnAttackKey.Subscribe(_ => OnAttack());
+            view.OnDirKey.Subscribe(OnMove).AddTo(this);
+            view.OnAttackKey.Subscribe(_ => OnAttack()).AddTo(this);
         }
 
         private void OnMove(Vector3 dir)

@@ -13,6 +13,7 @@ namespace AI.Unit.Enemy
 
         private Transform player;
         private NavMeshAgent nav;
+        private AIModel.Behavior behavior;
 
         private void Start()
         {
@@ -22,7 +23,7 @@ namespace AI.Unit.Enemy
 
             nav = GetComponent<NavMeshAgent>();
 
-            Observable.EveryUpdate().Select(x => Model.Behaviors[0].GetBehavior).Subscribe(OnAction);
+            Observable.EveryUpdate().Select(x => Model.Behaviors[0].GetBehavior).Subscribe(OnAction).AddTo(this);
         }
         
         private void OnAction(AIModel.Behavior behavior)
