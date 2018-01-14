@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-using System;
-
 using UniRx;
 
-using AI.Unit;
+using System.Linq;
 
-namespace AI.Player
+using AI.Unit.Enemy;
+
+namespace AI.Unit.Player
 {
     public class PlayerController : MonoBehaviour
     {
@@ -32,11 +32,16 @@ namespace AI.Player
 
         private void OnAttack()
         {
-            attackTrigger.Target.ForEach(x => Debug.Log(x.name));
-        }
-
-        private void OnStay()
-        {
+            attackTrigger.Target
+                .ForEach(x =>
+                {
+                    EnemyController enemy = x.GetComponent<EnemyController>();
+                    if (enemy != null)
+                    {
+                        enemy.Model.Hp -= Model.Power;
+                        Debug.Log(enemy.Model.Hp);
+                    }
+                });
         }
     }
 }

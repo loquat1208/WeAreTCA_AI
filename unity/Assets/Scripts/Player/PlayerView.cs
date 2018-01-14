@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UniRx;
 
-namespace AI.Player
+namespace AI.Unit.Player
 {
     public class PlayerView : MonoBehaviour
     {

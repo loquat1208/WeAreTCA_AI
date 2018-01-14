@@ -2,7 +2,7 @@
 
 using AI.Behavior;
 
-namespace AI.Enemy
+namespace AI.Unit.Enemy
 {
     public class EnemyModel
     {
