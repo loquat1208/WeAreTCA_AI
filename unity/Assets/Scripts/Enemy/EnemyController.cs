@@ -3,7 +3,10 @@ using UnityEngine.AI;
 
 using UniRx;
 
+using System.Linq;
+
 using AI.Behavior;
+using AI.Unit.Player;
 
 namespace AI.Unit.Enemy
 {
@@ -18,15 +21,56 @@ namespace AI.Unit.Enemy
         private void Start()
         {
             Model = new EnemyModel();
-
             player = GameObject.FindGameObjectWithTag("Player").transform;
-
             nav = GetComponent<NavMeshAgent>();
-
-            Observable.EveryUpdate().Select(x => Model.Behaviors[0].GetBehavior).Subscribe(OnAction).AddTo(this);
+            behavior = AIModel.Behavior.Chase;
+            Observable.EveryUpdate().Subscribe(_ =>
+            {
+                SetBehavior();
+                OnAction();
+            });
         }
-        
-        private void OnAction(AIModel.Behavior behavior)
+
+        // NOTE: 現在順番は後に設定した条件優先
+        private void SetBehavior()
+        {
+            // NOTE: コードリファトリングが必要
+            for (int i = 0; i < Model.Behaviors.Count; i++ )
+            {
+                AIModel ai = Model.Behaviors[i];
+                if (ai.GetSubject == AIModel.Subject.Player)
+                {
+                    PlayerModel model = player.GetComponent<PlayerController>().Model;
+                    if (ai.GetCriterion == AIModel.Criterion.Hp)
+                    {
+                        if (model.Hp < ai.GetFrom || model.Hp > ai.GetTo)
+                            continue;
+                    }
+                    if (ai.GetCriterion == AIModel.Criterion.Mp)
+                    {
+                        if (model.Mp < ai.GetFrom || model.Mp > ai.GetTo)
+                            continue;
+                    }
+                }
+                if (ai.GetSubject == AIModel.Subject.Enemy)
+                {
+                    if (ai.GetCriterion == AIModel.Criterion.Hp)
+                    {
+                        if (Model.Hp < ai.GetFrom || Model.Hp > ai.GetTo)
+                            continue;
+                    }
+                    if (ai.GetCriterion == AIModel.Criterion.Mp)
+                    {
+                        if (Model.Mp < ai.GetFrom || Model.Mp > ai.GetTo)
+                            continue;
+                    }
+                }
+
+                behavior = ai.GetBehavior;
+            }
+        }
+
+        private void OnAction()
         {
             switch(behavior)
             {

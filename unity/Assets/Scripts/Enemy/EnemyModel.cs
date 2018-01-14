@@ -24,7 +24,8 @@ namespace AI.Unit.Enemy
             Skill = Behavior.Skill.Type.None;
             Hp = maxHp;
             Mp = maxMp;
-            Behaviors.Add(0, new AIModel());
+            Behaviors.Add(0, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Hp, 0, 100, AIModel.Behavior.None));
+            Behaviors.Add(1, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Mp, 0, 100, AIModel.Behavior.Chase));
         }
 
         public EnemyModel(Skill.Type skill, Dictionary<int, AIModel> behaviors)
