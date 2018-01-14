@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-using System.Collections;
+using UniRx;
+
+using AI.Behavior;
 
 namespace AI.Unit.Enemy
 {
@@ -19,20 +21,49 @@ namespace AI.Unit.Enemy
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
             nav = GetComponent<NavMeshAgent>();
-        }
 
-        private void Update()
+            Observable.EveryUpdate().Select(x => Model.Behaviors[0].GetBehavior).Subscribe(OnAction);
+        }
+        
+        private void OnAction(AIModel.Behavior behavior)
         {
-            if (nav.enabled)
-                nav.SetDestination(player.position);
+            switch(behavior)
+            {
+                case AIModel.Behavior.Attack:
+                    OnAttack();
+                    break;
+                case AIModel.Behavior.Escape:
+                    OnAttack();
+                    break;
+                case AIModel.Behavior.Chase:
+                    OnChase();
+                    break;
+                case AIModel.Behavior.Skill:
+                    OnSkill();
+                    break;
+                case AIModel.Behavior.None:
+                    OnStay();
+                    break;
+            }
         }
 
-        public void OnChase()
+        private void OnChase()
         {
             nav.isStopped = false;
+            nav.SetDestination(player.position);
         }
 
-        public void OnStay()
+        private void OnStay()
+        {
+            nav.isStopped = true;
+        }
+
+        private void OnAttack()
+        {
+            nav.isStopped = true;
+        }
+
+        private void OnSkill()
         {
             nav.isStopped = true;
         }

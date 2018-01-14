@@ -7,6 +7,7 @@
         {
             Attack,
             Escape,
+            Chase,
             Skill,
             None,
         }
@@ -28,6 +29,8 @@
         private float from;
         private float to;
         private Behavior behavior;
+
+        public Behavior GetBehavior { get { return behavior; } }
         
         public AIModel()
         {
@@ -35,7 +38,7 @@
             criterion = Criterion.Hp;
             from = 0;
             to = 100;
-            behavior = Behavior.None;
+            behavior = Behavior.Chase;
         }
 
         public AIModel(Subject subject, Criterion criterion, float from, float to, Behavior behavior)

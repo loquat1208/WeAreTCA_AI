@@ -16,8 +16,8 @@ namespace AI.Unit.Enemy
         public int Hp { get; set; }
         public int Mp { get; set; }
 
-        private Skill.Type Skill;
-        private Dictionary<int, AIModel> Behaviors = new Dictionary<int, AIModel>();
+        public Skill.Type Skill;
+        public Dictionary<int, AIModel> Behaviors = new Dictionary<int, AIModel>();
 
         public EnemyModel()
         {
