@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
+
 using System;
+
 using UniRx;
+
+using AI.Unit;
 
 namespace AI.Player
 {
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerView view;
-        // NOTO: Prefab化してResourceフォルダーから呼ぶか決めないと
-        [SerializeField] private GameObject attackTrigger;
+        [SerializeField] private TargetView attackTrigger;
 
         public PlayerModel Model { get; set; }
 
@@ -18,10 +21,7 @@ namespace AI.Player
         {
             Model = new PlayerModel();
             view.OnDirKey.Subscribe(OnMove);
-            view.OnAttackKey.Subscribe(isAttack =>
-            {
-                OnAttack();
-            });
+            view.OnAttackKey.Subscribe(_ => OnAttack());
         }
 
         private void OnMove(Vector3 dir)
@@ -32,18 +32,11 @@ namespace AI.Player
 
         private void OnAttack()
         {
-            attackTrigger.SetActive(true);
-            Delay(1, OnStay);
+            attackTrigger.Target.ForEach(x => Debug.Log(x.name));
         }
 
         private void OnStay()
         {
-            attackTrigger.SetActive(false);
-        }
-
-        private void Delay(float time, Action onComplete = null)
-        {
-            Observable.Timer(TimeSpan.FromSeconds(time)).First().Subscribe(_ => onComplete.Invoke());
         }
     }
 }
