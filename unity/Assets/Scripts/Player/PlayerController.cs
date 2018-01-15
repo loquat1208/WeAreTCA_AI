@@ -37,10 +37,7 @@ namespace AI.Unit.Player
                 {
                     EnemyController enemy = x.GetComponent<EnemyController>();
                     if (enemy != null)
-                    {
                         enemy.Model.Hp -= Model.Power;
-                        Debug.Log(enemy.Model.Hp);
-                    }
                 });
         }
     }

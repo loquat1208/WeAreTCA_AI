@@ -12,13 +12,19 @@ namespace AI.Unit
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Enemy")
+            if (transform.parent.tag == "Player" && other.tag == "Enemy")
+                Target.Add(other);
+
+            if (transform.parent.tag == "Enemy" && other.tag == "Player")
                 Target.Add(other);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag == "Enemy")
+            if (transform.parent.tag == "Player" && other.tag == "Enemy")
+                Target.Remove(other);
+
+            if (transform.parent.tag == "Enemy" && other.tag == "Player")
                 Target.Remove(other);
         }
     }

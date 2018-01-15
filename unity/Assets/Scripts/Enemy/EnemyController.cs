@@ -3,8 +3,6 @@ using UnityEngine.AI;
 
 using UniRx;
 
-using System.Linq;
-
 using AI.Behavior;
 using AI.Unit.Player;
 
@@ -12,6 +10,8 @@ namespace AI.Unit.Enemy
 {
     public class EnemyController : MonoBehaviour
     {
+        [SerializeField] private TargetView attackTrigger;
+
         public EnemyModel Model { get; set; }
 
         private Transform player;
@@ -23,7 +23,6 @@ namespace AI.Unit.Enemy
             Model = new EnemyModel();
             player = GameObject.FindGameObjectWithTag("Player").transform;
             nav = GetComponent<NavMeshAgent>();
-            behavior = AIModel.Behavior.Chase;
             Observable.EveryUpdate().Subscribe(_ =>
             {
                 SetBehavior();
@@ -105,7 +104,18 @@ namespace AI.Unit.Enemy
 
         private void OnAttack()
         {
-            nav.isStopped = true;
+            nav.isStopped = false;
+            nav.SetDestination(player.position);
+
+            // TODO: animationを追加してanimationが終わったら減るようにする
+            if (attackTrigger.Target.Count > 0)
+            {
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                if (playerController != null)
+                    playerController.Model.Hp -= Model.Power;
+
+                Debug.Log(playerController.Model.Hp);
+            };
         }
 
         private void OnSkill()
