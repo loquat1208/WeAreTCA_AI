@@ -8,11 +8,11 @@ namespace AI.Unit.Enemy
     {
         private const int maxHp = 100;
         private const int maxMp = 100;
-        private const int speed = 1;
         private const int searchLength = 10;
         private const int searchAngle = 30;
 
         public readonly int Power = 100;
+        public readonly int Speed = 1;
         public int Hp { get; set; }
         public int Mp { get; set; }
 
@@ -24,8 +24,8 @@ namespace AI.Unit.Enemy
             Skill = Behavior.Skill.Type.None;
             Hp = maxHp;
             Mp = maxMp;
-            Behaviors.Add(0, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Hp, 0, 100, AIModel.Behavior.Attack));
-            Behaviors.Add(1, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Mp, 0, 100, AIModel.Behavior.Attack));
+            Behaviors.Add(0, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Hp, 0, 100, AIModel.Behavior.Chase));
+            Behaviors.Add(1, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Mp, 0, 100, AIModel.Behavior.Chase));
         }
 
         public EnemyModel(Skill.Type skill, Dictionary<int, AIModel> behaviors)

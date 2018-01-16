@@ -18,6 +18,8 @@ namespace AI.Unit.Enemy
         private NavMeshAgent nav;
         private AIModel.Behavior behavior;
 
+        private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
+
         private void Start()
         {
             Model = new EnemyModel();
@@ -77,7 +79,7 @@ namespace AI.Unit.Enemy
                     OnAttack();
                     break;
                 case AIModel.Behavior.Escape:
-                    OnAttack();
+                    OnEscape();
                     break;
                 case AIModel.Behavior.Chase:
                     OnChase();
@@ -95,6 +97,7 @@ namespace AI.Unit.Enemy
         {
             nav.isStopped = false;
             nav.SetDestination(player.position);
+            nav.speed = Model.Speed;
         }
 
         private void OnStay()
@@ -102,10 +105,17 @@ namespace AI.Unit.Enemy
             nav.isStopped = true;
         }
 
+        private void OnEscape()
+        {
+            nav.isStopped = true;
+            Vector3 dir = Vector3.Normalize(transform.position - player.position);
+            rigid.velocity = dir * Model.Speed;
+            rigid.rotation = Quaternion.LookRotation(dir);
+        }
+
         private void OnAttack()
         {
-            nav.isStopped = false;
-            nav.SetDestination(player.position);
+            OnChase();
 
             // TODO: animationを追加してanimationが終わったら減るようにする
             if (attackTrigger.Target.Count > 0)
@@ -113,8 +123,6 @@ namespace AI.Unit.Enemy
                 PlayerController playerController = player.GetComponent<PlayerController>();
                 if (playerController != null)
                     playerController.Model.Hp -= Model.Power;
-
-                Debug.Log(playerController.Model.Hp);
             };
         }
 
