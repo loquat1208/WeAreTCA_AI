@@ -93,6 +93,7 @@ namespace AI.Unit.Enemy
             }
         }
 
+        // NOTE: 下のメソッドを他のクラスに移動する？
         private void OnChase()
         {
             nav.isStopped = false;
@@ -129,6 +130,31 @@ namespace AI.Unit.Enemy
         private void OnSkill()
         {
             nav.isStopped = true;
+            switch(Model.Skill)
+            {
+                case Skill.Type.Dash:
+                    OnChase();
+
+                    // TODO: animationを追加してanimationが終わったら減るようにする
+                    // NOTO: Skillクラスに移動する？
+                    if (attackTrigger.Target.Count > 0)
+                    {
+                        PlayerController playerController = player.GetComponent<PlayerController>();
+                        if (playerController != null)
+                            playerController.Model.Hp -= Skill.DashPower;
+                    };
+                    break;
+                case Skill.Type.Heal:
+                    // TODO: animationを追加してanimationが終わったら減るようにする
+                    if (Model.Mp > 0)
+                    {
+                        Model.Mp -= Skill.HealMpCost;
+                        Model.Hp -= Skill.HealPower;
+                    }
+                    break;
+                case Skill.Type.None:
+                    break;
+            }
         }
     }
 }
