@@ -36,5 +36,17 @@ namespace AI.Unit.Player
                     .AsObservable();
             }
         }
+
+        public IObservable<bool> OnDashKey
+        {
+            get
+            {
+                return Observable.EveryUpdate()
+                    // NOTE: 後キーを決めないと。。
+                    .Select(_ => Input.GetKeyDown(KeyCode.Space))
+                    .Where(isDash => isDash)
+                    .AsObservable();
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace AI.Unit.Player
 
         public PlayerModel Model { get; set; }
 
-        private bool isAttack = false;
+        private bool isAction = false;
         private Animator anim { get { return GetComponent<Animator>(); } }
 
         void Start()
@@ -24,7 +24,7 @@ namespace AI.Unit.Player
             Model = new PlayerModel();
 
             view.OnDirKey
-                .Where(_ => !isAttack)
+                .Where(_ => !isAction)
                 .Subscribe(dir =>
                 {
                     if (dir != Vector3.zero)
@@ -35,6 +35,9 @@ namespace AI.Unit.Player
 
             view.OnAttackKey.Subscribe(_ => OnAttack()).AddTo(this);
             view.OnHealKey.Subscribe(_ => OnHeal()).AddTo(this);
+            view.OnDashKey
+                .Where(_ => Model.Mp > Skill.DashMpCost && attackTrigger.Target.Count > 0)
+                .Subscribe(_ => OnDash()).AddTo(this);
         }
 
         private void OnMove(Vector3 dir)
@@ -59,20 +62,40 @@ namespace AI.Unit.Player
             anim.SetTrigger("param_idletowinpose");
         }
 
+        private void OnDash()
+        {
+            transform.position -= transform.forward * 2.7f;
+            anim.SetTrigger("param_idletohit03");
+        }
+
+        private void Dash()
+        {
+            isAction = true;
+            attackTrigger.Target
+                .ForEach(x =>
+                {
+                    EnemyController enemy = x.GetComponent<EnemyController>();
+                    Model.Mp -= Skill.DashMpCost;
+                    if (enemy != null)
+                        enemy.Model.Hp -= Skill.DashPower;
+                    Debug.Log(enemy.Model.Hp + "/" + Model.Mp);
+                });
+        }
+
         private void Heal()
         {
-            if (Model.Mp > 0)
+            isAction = true;
+            if (Model.Mp >= Skill.HealMpCost)
             {
                 Model.Mp -= Skill.HealMpCost;
                 Model.Hp += Skill.HealPower;
-                Debug.Log(Model.Hp + "/" + Model.Mp);
             }
         }
 
         // NOTO: AttackStart,EndはAnimationCommponentで処理
-        private void AttackStart()
+        private void Attack()
         {
-            isAttack = true;
+            isAction = true;
             attackTrigger.Target
                 .ForEach(x =>
                 {
@@ -82,9 +105,9 @@ namespace AI.Unit.Player
                 });
         }
 
-        private void AttackEnd()
+        private void ActionEnd()
         {
-            isAttack = false;
+            isAction = false;
         }
     }
 }
