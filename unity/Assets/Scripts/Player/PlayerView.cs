@@ -25,5 +25,16 @@ namespace AI.Unit.Player
                     .AsObservable();
             }
         }
+
+        public IObservable<bool> OnHealKey
+        {
+            get
+            {
+                return Observable.EveryUpdate()
+                    .Select(_ => Input.GetButtonDown("Fire2"))
+                    .Where(isHeal => isHeal)
+                    .AsObservable();
+            }
+        }
     }
 }

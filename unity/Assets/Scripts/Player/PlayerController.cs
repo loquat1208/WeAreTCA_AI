@@ -4,6 +4,7 @@ using UniRx;
 
 using System.Linq;
 
+using AI.Behavior;
 using AI.Unit.Enemy;
 
 namespace AI.Unit.Player
@@ -33,6 +34,7 @@ namespace AI.Unit.Player
                 }).AddTo(this);
 
             view.OnAttackKey.Subscribe(_ => OnAttack()).AddTo(this);
+            view.OnHealKey.Subscribe(_ => OnHeal()).AddTo(this);
         }
 
         private void OnMove(Vector3 dir)
@@ -52,6 +54,21 @@ namespace AI.Unit.Player
             anim.SetTrigger("param_idletohit01");
         }
 
+        private void OnHeal()
+        {
+            anim.SetTrigger("param_idletowinpose");
+        }
+
+        private void Heal()
+        {
+            if (Model.Mp > 0)
+            {
+                Model.Mp -= Skill.HealMpCost;
+                Model.Hp += Skill.HealPower;
+                Debug.Log(Model.Hp + "/" + Model.Mp);
+            }
+        }
+
         // NOTO: AttackStart,EndはAnimationCommponentで処理
         private void AttackStart()
         {
@@ -62,7 +79,6 @@ namespace AI.Unit.Player
                     EnemyController enemy = x.GetComponent<EnemyController>();
                     if (enemy != null)
                         enemy.Model.Hp -= Model.Power;
-                    Debug.Log(enemy.Model.Hp);
                 });
         }
 

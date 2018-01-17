@@ -149,7 +149,7 @@ namespace AI.Unit.Enemy
                     if (Model.Mp > 0)
                     {
                         Model.Mp -= Skill.HealMpCost;
-                        Model.Hp -= Skill.HealPower;
+                        Model.Hp += Skill.HealPower;
                     }
                     break;
                 case Skill.Type.None:
