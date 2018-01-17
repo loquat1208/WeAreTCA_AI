@@ -16,11 +16,18 @@ namespace AI.Unit.Player
         public PlayerModel Model { get; set; }
 
         private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
+        private Animator anim { get { return GetComponent<Animator>(); } }
 
         void Start()
         {
             Model = new PlayerModel();
-            view.OnDirKey.Subscribe(OnMove).AddTo(this);
+            view.OnDirKey.Subscribe(dir =>
+            {
+                if (dir != Vector3.zero)
+                    OnMove(dir);
+                else
+                    OnStay();
+            }).AddTo(this);
             view.OnAttackKey.Subscribe(_ => OnAttack()).AddTo(this);
         }
 
@@ -28,6 +35,12 @@ namespace AI.Unit.Player
         {
             rigid.velocity = dir * Model.Speed;
             rigid.rotation = Quaternion.LookRotation(dir);
+            anim.SetBool("param_idletorunning", true);
+        }
+
+        private void OnStay()
+        {
+            anim.SetBool("param_idletorunning", false);
         }
 
         private void OnAttack()
