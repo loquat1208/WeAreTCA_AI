@@ -19,6 +19,7 @@ namespace AI.Unit.Enemy
         private AIModel.Behavior behavior;
 
         private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
+        private Animator anim { get { return GetComponent<Animator>(); } }
 
         private void Start()
         {
@@ -96,6 +97,8 @@ namespace AI.Unit.Enemy
         // NOTE: 下のメソッドを他のクラスに移動する？
         private void OnChase()
         {
+            // NOTE: ずっとtrue, falseすること直したい
+            anim.SetBool("IsRun", true);
             nav.isStopped = false;
             nav.SetDestination(player.position);
             nav.speed = Model.Speed;
