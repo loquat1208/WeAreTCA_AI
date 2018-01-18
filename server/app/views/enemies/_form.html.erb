@@ -13,7 +13,12 @@
     <%= f.label :hp %>
     <%= f.number_field :hp, id: :enemy_hp %>
   </div>
-  
+ 
+  <div class="field">
+    <%= f.label :skill %>
+    <%= f.number_field :skill, id: :enemy_skill %>
+  </div>
+ 
   <h3>Actions</h3>
   <div id="actions">
     <%= f.fields_for :actions do |action| %>

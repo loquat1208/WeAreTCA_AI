@@ -69,6 +69,6 @@ class EnemiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def enemy_params
-      params.require(:enemy).permit(:power, :speed, :hp, actions_attributes: [:id, :execution, :character, :parameter, :value, :comparison, :action, :_destroy])
+      params.require(:enemy).permit(:power, :speed, :hp, :skill, actions_attributes: [:id, :execution, :character, :parameter, :value, :comparison, :action, :_destroy])
     end
 end
