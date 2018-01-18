@@ -18,6 +18,9 @@ namespace AI.Unit.Enemy
         private NavMeshAgent nav;
         private AIModel.Behavior behavior;
 
+        private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
+        private Animator anim { get { return GetComponent<Animator>(); } }
+
         private void Start()
         {
             Model = new EnemyModel();
@@ -77,7 +80,7 @@ namespace AI.Unit.Enemy
                     OnAttack();
                     break;
                 case AIModel.Behavior.Escape:
-                    OnAttack();
+                    OnEscape();
                     break;
                 case AIModel.Behavior.Chase:
                     OnChase();
@@ -91,10 +94,14 @@ namespace AI.Unit.Enemy
             }
         }
 
+        // NOTE: 下のメソッドを他のクラスに移動する？
         private void OnChase()
         {
+            // NOTE: ずっとtrue, falseすること直したい
+            anim.SetBool("IsRun", true);
             nav.isStopped = false;
             nav.SetDestination(player.position);
+            nav.speed = Model.Speed;
         }
 
         private void OnStay()
@@ -102,10 +109,17 @@ namespace AI.Unit.Enemy
             nav.isStopped = true;
         }
 
+        private void OnEscape()
+        {
+            nav.isStopped = true;
+            Vector3 dir = Vector3.Normalize(transform.position - player.position);
+            rigid.velocity = dir * Model.Speed;
+            rigid.rotation = Quaternion.LookRotation(dir);
+        }
+
         private void OnAttack()
         {
-            nav.isStopped = false;
-            nav.SetDestination(player.position);
+            OnChase();
 
             // TODO: animationを追加してanimationが終わったら減るようにする
             if (attackTrigger.Target.Count > 0)
@@ -113,14 +127,37 @@ namespace AI.Unit.Enemy
                 PlayerController playerController = player.GetComponent<PlayerController>();
                 if (playerController != null)
                     playerController.Model.Hp -= Model.Power;
-
-                Debug.Log(playerController.Model.Hp);
             };
         }
 
         private void OnSkill()
         {
             nav.isStopped = true;
+            switch(Model.Skill)
+            {
+                case Skill.Type.Dash:
+                    OnChase();
+
+                    // TODO: animationを追加してanimationが終わったら減るようにする
+                    // NOTO: Skillクラスに移動する？
+                    if (attackTrigger.Target.Count > 0)
+                    {
+                        PlayerController playerController = player.GetComponent<PlayerController>();
+                        if (playerController != null)
+                            playerController.Model.Hp -= Skill.DashPower;
+                    };
+                    break;
+                case Skill.Type.Heal:
+                    // TODO: animationを追加してanimationが終わったら減るようにする
+                    if (Model.Mp > 0)
+                    {
+                        Model.Mp -= Skill.HealMpCost;
+                        Model.Hp += Skill.HealPower;
+                    }
+                    break;
+                case Skill.Type.None:
+                    break;
+            }
         }
     }
 }
