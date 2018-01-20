@@ -78,7 +78,6 @@ namespace AI.Unit.Player
                     Model.Mp -= Skill.DashMpCost;
                     if (enemy != null)
                         enemy.Model.Hp -= Skill.DashPower;
-                    Debug.Log(enemy.Model.Hp + "/" + Model.Mp);
                 });
         }
 

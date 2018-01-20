@@ -106,15 +106,19 @@ namespace AI.Unit.Enemy
 
         private void OnStay()
         {
+            // NOTE: ずっとtrue, falseすること直したい
+            anim.SetBool("IsRun", false);
             nav.isStopped = true;
         }
 
         private void OnEscape()
         {
+            // NOTE: ずっとtrue, falseすること直したい
+            anim.SetBool("IsRun", true);
             nav.isStopped = true;
             Vector3 dir = Vector3.Normalize(transform.position - player.position);
-            rigid.velocity = dir * Model.Speed;
-            rigid.rotation = Quaternion.LookRotation(dir);
+            transform.position += dir * Model.Speed * Time.deltaTime;
+            transform.localRotation = Quaternion.LookRotation(dir);
         }
 
         private void OnAttack()
