@@ -24,8 +24,8 @@ namespace AI.Unit.Enemy
             Skill = Behavior.Skill.Type.Heal;
             Hp = maxHp;
             Mp = maxMp;
-            Behaviors.Add(0, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Hp, 0, 100, AIModel.Behavior.Attack));
-            Behaviors.Add(1, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Mp, 0, 100, AIModel.Behavior.Attack));
+            Behaviors.Add(0, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Hp, 0, 100, AIModel.Behavior.Skill));
+            Behaviors.Add(1, new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Mp, 0, 100, AIModel.Behavior.Skill));
         }
 
         public EnemyModel(Skill.Type skill, Dictionary<int, AIModel> behaviors)

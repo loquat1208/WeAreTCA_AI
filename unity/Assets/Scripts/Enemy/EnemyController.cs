@@ -8,6 +8,7 @@ using AI.Unit.Player;
 
 namespace AI.Unit.Enemy
 {
+    // NOTE: 後リファトリング必要
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private TargetView attackTrigger;
@@ -125,7 +126,6 @@ namespace AI.Unit.Enemy
             if (attackTrigger.Target.Count > 0)
                 anim.SetTrigger("IsAttack");
             PlayerController playerController = player.GetComponent<PlayerController>();
-            Debug.Log(playerController.Model.Hp);
         }
 
         // NOTE: AttackのAnimationEvent
@@ -154,16 +154,21 @@ namespace AI.Unit.Enemy
                     };
                     break;
                 case Skill.Type.Heal:
-                    // TODO: animationを追加してanimationが終わったら減るようにする
-                    if (Model.Mp > 0)
-                    {
-                        Model.Mp -= Skill.HealMpCost;
-                        Model.Hp += Skill.HealPower;
-                    }
+                    anim.SetTrigger("IsHeal");
                     break;
                 case Skill.Type.None:
                     break;
             }
+        }
+
+        private void Heal()
+        {
+            if (Model.Mp > Skill.HealMpCost)
+            {
+                Model.Mp -= Skill.HealMpCost;
+                Model.Hp += Skill.HealPower;
+            }
+            Debug.Log(Model.Hp + " / " + Model.Mp);
         }
     }
 }
