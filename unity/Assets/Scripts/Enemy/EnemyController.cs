@@ -159,15 +159,18 @@ namespace AI.Unit.Enemy
         {
             get
             {
-                float distance = Vector3.Distance(player.position, transform.position);
-                if (distance > Model.SearchLength)
-                    return false;
-
-                float angle = Vector3.Angle(transform.forward, player.position - transform.position);
+                Vector3 dirToPlayer = player.position - transform.position;
+                float angle = Vector3.Angle(transform.forward, dirToPlayer);
                 if (angle > Model.SearchAngle * 0.5f)
                     return false;
 
-                return true;
+                RaycastHit hit;
+                Vector3 startPosition = transform.position + transform.up + transform.forward;
+                bool isHit = Physics.Raycast(startPosition, dirToPlayer, out hit, Model.SearchLength);
+                if (isHit && hit.transform.tag == "Player")
+                    return true;
+
+                return false;
             }
         }
 
