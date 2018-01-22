@@ -128,30 +128,16 @@ namespace AI.Unit.Enemy
             PlayerController playerController = player.GetComponent<PlayerController>();
         }
 
-        // NOTE: AttackのAnimationEvent
-        private void Attack()
-        {
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
-                playerController.Model.Hp -= Model.Power;
-        }
-
         private void OnSkill()
         {
-            nav.isStopped = true;
             switch(Model.Skill)
             {
                 case Skill.Type.Dash:
                     OnChase();
 
-                    // TODO: animationを追加してanimationが終わったら減るようにする
                     // NOTO: Skillクラスに移動する？
                     if (attackTrigger.Target.Count > 0)
-                    {
-                        PlayerController playerController = player.GetComponent<PlayerController>();
-                        if (playerController != null)
-                            playerController.Model.Hp -= Skill.DashPower;
-                    };
+                        anim.SetTrigger("IsDash");
                     break;
                 case Skill.Type.Heal:
                     anim.SetTrigger("IsHeal");
@@ -161,6 +147,26 @@ namespace AI.Unit.Enemy
             }
         }
 
+        // NOTE: AnimationEvent
+        private void Attack()
+        {
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (playerController != null)
+                playerController.Model.Hp -= Model.Power;
+        }
+
+
+        private void Dash()
+        {
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.Model.Hp -= Skill.DashPower;
+                Model.Mp -= Skill.DashMpCost;
+            }
+            Debug.Log(playerController.Model.Hp + " / " + Model.Mp);
+        }
+
         private void Heal()
         {
             if (Model.Mp > Skill.HealMpCost)
@@ -168,7 +174,6 @@ namespace AI.Unit.Enemy
                 Model.Mp -= Skill.HealMpCost;
                 Model.Hp += Skill.HealPower;
             }
-            Debug.Log(Model.Hp + " / " + Model.Mp);
         }
     }
 }
