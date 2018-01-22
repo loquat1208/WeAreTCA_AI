@@ -8,9 +8,9 @@ namespace AI.Unit.Enemy
     {
         private const int maxHp = 100;
         private const int maxMp = 100;
-        private const int searchLength = 10;
-        private const int searchAngle = 30;
 
+        public readonly float SearchAngle = 60f;
+        public readonly float SearchLength = 10f;
         public readonly int Power = 1;
         public readonly int Speed = 1;
         public int Hp { get; set; }

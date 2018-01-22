@@ -98,8 +98,15 @@ namespace AI.Unit.Enemy
         // NOTE: 下のメソッドを他のクラスに移動する？
         private void OnChase()
         {
+            if (!IsDetected)
+            {
+                OnStay();
+                return;
+            }
+
             // NOTE: ずっとtrue, falseすること直したい
             anim.SetBool("IsRun", true);
+            nav.isStopped = false;
             nav.SetDestination(player.position);
             nav.speed = Model.Speed;
         }
@@ -107,6 +114,7 @@ namespace AI.Unit.Enemy
         private void OnStay()
         {
             // NOTE: ずっとtrue, falseすること直したい
+            nav.isStopped = true;
             anim.SetBool("IsRun", false);
         }
 
@@ -144,6 +152,18 @@ namespace AI.Unit.Enemy
                     break;
                 case Skill.Type.None:
                     break;
+            }
+        }
+
+        private bool IsDetected 
+        {
+            get
+            {
+                float distance = Vector3.Distance(player.position, transform.position);
+                if (distance > Model.SearchLength)
+                    return false;
+
+                return true;
             }
         }
 
