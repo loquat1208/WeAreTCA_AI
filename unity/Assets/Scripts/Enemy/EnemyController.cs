@@ -163,6 +163,10 @@ namespace AI.Unit.Enemy
                 if (distance > Model.SearchLength)
                     return false;
 
+                float angle = Vector3.Angle(transform.forward, player.position - transform.position);
+                if (angle > Model.SearchAngle * 0.5f)
+                    return false;
+
                 return true;
             }
         }
