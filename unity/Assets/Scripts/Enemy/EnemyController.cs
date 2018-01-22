@@ -18,7 +18,6 @@ namespace AI.Unit.Enemy
         private NavMeshAgent nav;
         private AIModel.Behavior behavior;
 
-        private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
         private Animator anim { get { return GetComponent<Animator>(); } }
 
         private void Start()
@@ -26,6 +25,7 @@ namespace AI.Unit.Enemy
             Model = new EnemyModel();
             player = GameObject.FindGameObjectWithTag("Player").transform;
             nav = GetComponent<NavMeshAgent>();
+            nav.stoppingDistance = 1.5f;
             Observable.EveryUpdate().Subscribe(_ =>
             {
                 SetBehavior();
@@ -99,7 +99,6 @@ namespace AI.Unit.Enemy
         {
             // NOTE: ずっとtrue, falseすること直したい
             anim.SetBool("IsRun", true);
-            nav.isStopped = false;
             nav.SetDestination(player.position);
             nav.speed = Model.Speed;
         }
@@ -108,14 +107,12 @@ namespace AI.Unit.Enemy
         {
             // NOTE: ずっとtrue, falseすること直したい
             anim.SetBool("IsRun", false);
-            nav.isStopped = true;
         }
 
         private void OnEscape()
         {
             // NOTE: ずっとtrue, falseすること直したい
             anim.SetBool("IsRun", true);
-            nav.isStopped = true;
             Vector3 dir = Vector3.Normalize(transform.position - player.position);
             transform.position += dir * Model.Speed * Time.deltaTime;
             transform.localRotation = Quaternion.LookRotation(dir);
@@ -125,13 +122,18 @@ namespace AI.Unit.Enemy
         {
             OnChase();
 
-            // TODO: animationを追加してanimationが終わったら減るようにする
             if (attackTrigger.Target.Count > 0)
-            {
-                PlayerController playerController = player.GetComponent<PlayerController>();
-                if (playerController != null)
-                    playerController.Model.Hp -= Model.Power;
-            };
+                anim.SetTrigger("IsAttack");
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            Debug.Log(playerController.Model.Hp);
+        }
+
+        // NOTE: AttackのAnimationEvent
+        private void Attack()
+        {
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (playerController != null)
+                playerController.Model.Hp -= Model.Power;
         }
 
         private void OnSkill()
