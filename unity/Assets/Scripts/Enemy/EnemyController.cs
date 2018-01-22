@@ -191,7 +191,6 @@ namespace AI.Unit.Enemy
                 playerController.Model.Hp -= Skill.DashPower;
                 Model.Mp -= Skill.DashMpCost;
             }
-            Debug.Log(playerController.Model.Hp + " / " + Model.Mp);
         }
 
         private void Heal()
@@ -201,6 +200,11 @@ namespace AI.Unit.Enemy
                 Model.Mp -= Skill.HealMpCost;
                 Model.Hp += Skill.HealPower;
             }
+        }
+
+        private void Rotate(float angle)
+        {
+            transform.Rotate(Vector3.up * angle);
         }
     }
 }
