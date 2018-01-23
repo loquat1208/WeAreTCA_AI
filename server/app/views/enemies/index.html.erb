@@ -21,8 +21,8 @@
           <th>実行順番</th>
           <th>参照ユニット</th>
           <th>参照パラメーター</th>
-          <th>バーセンテージ</th>
-          <th>以上かより下か</th>
+          <th>バーセンテージ(下限)</th>
+          <th>パーセンテージ(上限)</th>
           <th>動作</th>
         </tr>
         <% enemy.actions.each do |action| %>
@@ -39,28 +39,16 @@
 	      <td align="center">MP</td>
 	    <%end%>
             <td align="center"><%= action.value %></td>
-            <% if action.comparison == 0 %>
-	      <td align="center">以上</td>
-	    <%else%>
-	      <td align="center">以下</td>
-	    <%end%>
+            <td align="center"><%= action.comparison %></td>
 	    <%if action.action == 0 %>
 	      <td align="center">プレイヤーを攻撃する</td>
             <%elsif action.action == 1 %>
               <td align="center">スキルを使用する</td>
             <%elsif action.action == 2 %>
-              <td align="center">プレイヤーの正面に移動する</td>
-            <%elsif action.action == 3 %>
-              <td align="center">プレイヤーの背後に移動する</td>
-            <%elsif action.action == 4 %>
-              <td align="center">プレイヤーの右側に移動する</td>
-            <%elsif action.action == 5 %>
-              <td align="center">プレイヤーの左側に移動する</td>
-            <%elsif action.action == 6 %>
               <td align="center">プレイヤーの25M以外に移動する</td>
-            <%elsif action.action == 7 %>
+            <%elsif action.action == 3 %>
               <td align="center">プレイヤーの50M以外に移動する</td>
-            <%elsif action.action == 8 %>
+            <%elsif action.action == 4 %>
               <td align="center">プレイヤーの75M以外に移動する</td>
 	    <%end%>
 	  </tr>

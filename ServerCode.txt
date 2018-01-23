@@ -1,0 +1,94 @@
+サーバーの接続するためのコード
+
+using UnityEngine;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+using LitJson;
+
+public class TestWWW : MonoBehaviour {
+
+    void Start () {
+        // IEnumeratorインターフェースを継承したメソッドは、StartCoroutineでコールする
+	//エネミーのデーターを全て取得する
+        StartCoroutine(Get("http://localhost:3000/api/enemies/"));
+	//エネミー個々のアクションを取る
+	foreach(Enemy enemy in enemies ){
+          StartCoroutine(Get("http://localhost:3000/api/enemies/actions?enemy_id=" + enemy.id));
+    	}
+    }
+
+    void Update () {
+
+    }
+
+    IEnumerator GetEnemyAction (string url) {
+        // HEADERはHashtableで記述
+        Hashtable header = new Hashtable ();
+        header.Add ("Accept-Language", "ja");
+
+        // 送信開始
+        WWW www = new WWW (url, null, header);
+        yield return www;
+
+        // 成功
+        if (www.error == null) {
+            Debug.Log("Get Success");
+
+            // 本来はサーバからのレスポンスとしてjsonを戻し、www.textを使用するが
+            // 今回は便宜上、下記のjsonを使用する
+            string action = "{\"cahracter\", \"parameter\", \"value\", \"comparison\", \"action\", \"enemy_id\"};
+            TestResponse r = JsonMapper.ToObject<TestResponse> (txt);
+            Debug.Log("name: " + response.name);
+            Debug.Log("level: " + response.level);
+            Debug.Log("friend_names[0]: " + response.friend_names[0]);
+            Debug.Log("friend_names[1]: " + response.friend_names[1]);
+            Debug.Log("friend_names[2]: " + response.friend_names[2]);
+        }
+        // 失敗
+        else{
+            Debug.Log("Get Failure");           
+        }
+    }
+}
+
+// レスポンスのJSONを格納するクラス
+class Enemy {
+    public int id;
+    public int power;
+    public int speed;
+    public int hp;
+    public Dictionary<int,EnemyAction>;
+}
+
+class EnemyAction {
+    public enemy_code;
+    public character;
+    public parameter
+    public value_lower;
+    public value_upper;
+    public action;
+}
+
+/////////////////////////////////////
+
+string railsServer = "http://localhost:3000/";
+
+public void GetJsonToDebug( string url, string enemyNum = null, Callback callback = null ) { 
+    var debugPrintStr = "url: " + url + "\n" + "type: GET";
+    Debug.logger.Log(debugPrintStr);
+    StartCoroutine(_GetJSON(url, callback ));
+}
+
+Ienumerator GetJSON(string url, Dictionary<string, string> param, Callback callback){
+    var urlStr = railsServer + url;
+    var www = WWW(urlStr);
+    yield return www;
+    var data = null;
+    if(!string.IsNullOrEmpty(www.error)){
+      Debug.logger.Log("エラー発生")
+    } else {
+      date = JsonMapper.Toobject(www.text);
+    }
+    callback(body);
+}

@@ -7,6 +7,7 @@ class Api::EnemiesController < ApplicationController
 
   def actions
     @actions = Enemy.find_by(id: params[:enemy_id]).actions.all
+    @actions.order(:execution)
     render json: @actions
   end
 end
