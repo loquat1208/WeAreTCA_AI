@@ -49,8 +49,8 @@ namespace AI.Unit.Player
 
         private void OnMove(Vector3 dir)
         {
-            transform.position += dir * Model.Speed * Time.deltaTime;
-            transform.localRotation = Quaternion.LookRotation(dir);
+            transform.Translate(new Vector3(0, 0, dir.z) * Model.Speed * Time.deltaTime);
+            transform.Rotate(new Vector3(0, dir.x, 0) * Model.RotateSpeed * Time.deltaTime);
             anim.SetBool("param_idletorunning", true);
         }
 

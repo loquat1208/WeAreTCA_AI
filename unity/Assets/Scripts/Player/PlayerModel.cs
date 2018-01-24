@@ -7,7 +7,8 @@
 
         public readonly double MpRecoveryTime = 10;
         public readonly int Power = 10;
-        public readonly int Speed = 10;
+        public readonly float Speed = 25 * 0.2f;
+        public readonly int RotateSpeed = 100;
         public int Hp { get; set; }
         public int Mp { get; set; }
 
