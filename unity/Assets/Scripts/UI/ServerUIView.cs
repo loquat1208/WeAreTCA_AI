@@ -26,6 +26,8 @@ namespace AI.UI
         [SerializeField] private Button fixedButton;
         [SerializeField] private Button farButton;
         [SerializeField] private Button nearButton;
+        [SerializeField] private Button enemySearchUIOnButton;
+        [SerializeField] private Button enemySearchUIOffButton;
         [SerializeField] private Text playerText;
         [SerializeField] private List<Text> enemysTexts;
 
@@ -41,6 +43,8 @@ namespace AI.UI
             fixedButton.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Fixed).AddTo(this);
             farButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Far).AddTo(this);
             nearButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Near).AddTo(this);
+            enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(true))).AddTo(this);
+            enemySearchUIOffButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(false))).AddTo(this);
 
             Observable.EveryUpdate().Subscribe(_ =>
             {
