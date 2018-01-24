@@ -42,7 +42,6 @@ namespace AI.Unit.Player
             Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
             {
                 Model.Mp += 1;
-                Debug.Log(Model.Mp);
             }).AddTo(this);
         }
 
