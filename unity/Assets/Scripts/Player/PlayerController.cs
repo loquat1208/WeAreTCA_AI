@@ -13,7 +13,6 @@ namespace AI.Unit.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerView view;
-        [SerializeField] private TargetView attackTrigger;
 
         public PlayerModel Model { get; set; }
 
@@ -37,7 +36,7 @@ namespace AI.Unit.Player
             view.OnAttackKey.Subscribe(_ => OnAttack()).AddTo(this);
             view.OnHealKey.Subscribe(_ => OnHeal()).AddTo(this);
             view.OnDashKey
-                .Where(_ => Model.Mp > Skill.DashMpCost && attackTrigger.Target.Count > 0)
+                .Where(_ => Model.Mp > Skill.DashMpCost && view.AttackTrigger.Target.Count > 0)
                 .Subscribe(_ => OnDash()).AddTo(this);
 
             Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
@@ -78,7 +77,7 @@ namespace AI.Unit.Player
         private void Dash()
         {
             isAction = true;
-            attackTrigger.Target
+            view.AttackTrigger.Target
                 .ForEach(x =>
                 {
                     EnemyController enemy = x.GetComponent<EnemyController>();
@@ -102,7 +101,7 @@ namespace AI.Unit.Player
         private void Attack()
         {
             isAction = true;
-            attackTrigger.Target
+            view.AttackTrigger.Target
                 .ForEach(x =>
                 {
                     EnemyController enemy = x.GetComponent<EnemyController>();

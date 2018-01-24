@@ -4,7 +4,7 @@ using UniRx;
 
 namespace AI.System
 {
-    public class PlayerCamera : MonoBehaviour
+    public class ClientCamera : MonoBehaviour
     {
         [SerializeField] private Transform player;
         [SerializeField] private float distance = -2f;

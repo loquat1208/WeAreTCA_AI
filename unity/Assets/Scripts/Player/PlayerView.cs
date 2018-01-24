@@ -5,6 +5,12 @@ namespace AI.Unit.Player
 {
     public class PlayerView : MonoBehaviour
     {
+        public TargetView AttackTrigger;
+
+        [SerializeField] private KeyCode attack = KeyCode.Z;
+        [SerializeField] private KeyCode heal = KeyCode.X;
+        [SerializeField] private KeyCode dash = KeyCode.C;
+
         // NOTE: ループが多すぎるコードリファトリング必要
         public IObservable<Vector3> OnDirKey
         {
@@ -21,7 +27,7 @@ namespace AI.Unit.Player
             get
             {
                 return Observable.EveryUpdate()
-                    .Select(_ => Input.GetButtonDown("Fire1"))
+                    .Select(_ => Input.GetKeyDown(attack))
                     .Where(isAttack => isAttack)
                     .AsObservable();
             }
@@ -32,7 +38,7 @@ namespace AI.Unit.Player
             get
             {
                 return Observable.EveryUpdate()
-                    .Select(_ => Input.GetButtonDown("Fire2"))
+                    .Select(_ => Input.GetKeyDown(heal))
                     .Where(isHeal => isHeal)
                     .AsObservable();
             }
@@ -44,7 +50,7 @@ namespace AI.Unit.Player
             {
                 return Observable.EveryUpdate()
                     // NOTE: 後キーを決めないと。。
-                    .Select(_ => Input.GetKeyDown(KeyCode.Space))
+                    .Select(_ => Input.GetKeyDown(dash))
                     .Where(isDash => isDash)
                     .AsObservable();
             }
