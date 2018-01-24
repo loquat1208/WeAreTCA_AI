@@ -195,8 +195,9 @@ namespace AI.Unit.Enemy
         private void Dash()
         {
             PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
+            if (playerController != null && attackTrigger.Target.Count > 0)
             {
+
                 playerController.Model.Hp -= Skill.DashPower;
                 Model.Mp -= Skill.DashMpCost;
             }
