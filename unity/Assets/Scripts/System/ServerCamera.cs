@@ -8,7 +8,7 @@ namespace AI.System
 {
     public class ServerCamera : MonoBehaviour
     {
-        private enum STATE
+        public enum STATE
         {
             Enemy1 = 0,
             Enemy2 = 1,
@@ -16,38 +16,48 @@ namespace AI.System
             Enemy4 = 3,
             Enemy5 = 4,
             Fixed = 5,
+            Player = 6,
         }
 
+        public enum DISTANCE
+        {
+            Far,
+            Near,
+        }
+
+        [SerializeField] private Transform player;
         [SerializeField] private List<Transform> enemys;
-        [SerializeField] private float height = 5f;
-        [SerializeField] private float fixedHeight = 40f;
+        [SerializeField] private float nearHeight = 10f;
+        [SerializeField] private float farHeight = 80f;
         [SerializeField] private float speed = 10f;
 
-        private int state = 0;
+        public STATE State { get; set; }
+        public DISTANCE Distance { get; set; }
+
+        private float height;
 
         void Start()
         {
-            Observable.EveryUpdate()
-                .Subscribe(_ =>
-                {
-                    if (Input.GetButtonDown("Fire1"))
-                    {
-                        state += 1;
-                        state = state > (int)STATE.Fixed ? 0 : state;
-                    }
-                    if (Input.GetButtonDown("Fire2"))
-                    {
-                        state -= 1;
-                        state = state < 0 ? (int)STATE.Fixed : state;
-                    }
+            State = STATE.Fixed;
+            Distance = DISTANCE.Near;
 
-                    OnShooting((STATE)state);
-                })
+            Observable.EveryUpdate()
+                .Subscribe(_ => OnShooting(State, Distance))
                 .AddTo(this);
         }
 
-        private void OnShooting(STATE state)
+        private void OnShooting(STATE state, DISTANCE distance)
         {
+            switch (distance)
+            {
+                case DISTANCE.Far:
+                    height = farHeight;
+                    break;
+                case DISTANCE.Near:
+                    height = nearHeight;
+                    break;
+            }
+
             switch (state)
             {
                 case STATE.Enemy1:
@@ -58,7 +68,10 @@ namespace AI.System
                     transform.position = Vector3.Lerp(transform.position, enemys[(int)state].position + Vector3.up * height, speed * Time.deltaTime);
                     break;
                 case STATE.Fixed:
-                    transform.position = Vector3.Lerp(transform.position, Vector3.up * fixedHeight, speed * Time.deltaTime);
+                    transform.position = Vector3.Lerp(transform.position, Vector3.up * farHeight, speed * Time.deltaTime);
+                    break;
+                case STATE.Player:
+                    transform.position = Vector3.Lerp(transform.position, player.position + Vector3.up * height, speed * Time.deltaTime);
                     break;
             }
         }
