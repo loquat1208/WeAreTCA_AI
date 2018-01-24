@@ -5,6 +5,7 @@ namespace AI.Unit.Player
 {
     public class PlayerView : MonoBehaviour
     {
+        // NOTE: ループが多すぎるコードリファトリング必要
         public IObservable<Vector3> OnDirKey
         {
             get

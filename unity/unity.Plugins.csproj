@@ -219,6 +219,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\LitJSON\IJsonWrapper.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\JsonData.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\JsonException.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\JsonMapper.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\JsonReader.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\JsonWriter.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\Lexer.cs" />
+    <Compile Include="Assets\Plugins\LitJSON\ParserToken.cs" />
     <Compile Include="Assets\Plugins\UniRx\Examples\Sample01_ObservableWWW.cs" />
     <Compile Include="Assets\Plugins\UniRx\Examples\Sample02_ObservableTriggers.cs" />
     <Compile Include="Assets\Plugins\UniRx\Examples\Sample03_GameObjectAsObservable.cs" />

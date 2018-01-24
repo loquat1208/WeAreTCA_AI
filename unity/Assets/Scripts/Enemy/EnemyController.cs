@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 using UnityEngine.AI;
 
 using UniRx;
@@ -27,11 +29,18 @@ namespace AI.Unit.Enemy
             player = GameObject.FindGameObjectWithTag("Player").transform;
             nav = GetComponent<NavMeshAgent>();
             nav.stoppingDistance = 1.5f;
+
+            Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
+            {
+                Model.Mp += 1;
+                Debug.Log(Model.Mp);
+            }).AddTo(this);
+
             Observable.EveryUpdate().Subscribe(_ =>
             {
                 SetBehavior();
                 OnAction();
-            });
+            }).AddTo(this);
         }
 
         // NOTE: 現在順番は後に設定した条件優先

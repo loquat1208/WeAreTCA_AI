@@ -2,6 +2,7 @@
 
 using UniRx;
 
+using System;
 using System.Linq;
 
 using AI.Behavior;
@@ -38,6 +39,12 @@ namespace AI.Unit.Player
             view.OnDashKey
                 .Where(_ => Model.Mp > Skill.DashMpCost && attackTrigger.Target.Count > 0)
                 .Subscribe(_ => OnDash()).AddTo(this);
+
+            Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
+            {
+                Model.Mp += 1;
+                Debug.Log(Model.Mp);
+            }).AddTo(this);
         }
 
         private void OnMove(Vector3 dir)
