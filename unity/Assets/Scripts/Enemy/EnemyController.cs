@@ -19,9 +19,10 @@ namespace AI.Unit.Enemy
 
         private Transform player;
         private NavMeshAgent nav;
-        private AIModel.Behavior behavior;
 
         private Animator anim { get { return GetComponent<Animator>(); } }
+
+        public AIModel.Behavior Behavior { get; private set; }
 
         private void Start()
         {
@@ -33,7 +34,6 @@ namespace AI.Unit.Enemy
             Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
             {
                 Model.Mp += 1;
-                Debug.Log(Model.Mp);
             }).AddTo(this);
 
             Observable.EveryUpdate().Subscribe(_ =>
@@ -78,13 +78,13 @@ namespace AI.Unit.Enemy
                     }
                 }
 
-                behavior = ai.GetBehavior;
+                Behavior = ai.GetBehavior;
             }
         }
 
         private void OnAction()
         {
-            switch(behavior)
+            switch(Behavior)
             {
                 case AIModel.Behavior.Attack:
                     OnAttack();

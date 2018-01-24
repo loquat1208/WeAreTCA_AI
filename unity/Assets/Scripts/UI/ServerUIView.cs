@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 using AI.System;
+using AI.Behavior;
+using AI.Unit.Player;
+using AI.Unit.Enemy;
 
 using UniRx;
 
@@ -11,6 +14,8 @@ namespace AI.UI
 {
     public class ServerUIView : MonoBehaviour
     {
+        [SerializeField] private PlayerController player;
+        [SerializeField] private List<EnemyController> enemys;
         [SerializeField] private ServerCamera serverCamera;
         [SerializeField] private Button playerButton;
         [SerializeField] private Button enemy1Button;
@@ -21,6 +26,8 @@ namespace AI.UI
         [SerializeField] private Button fixedButton;
         [SerializeField] private Button farButton;
         [SerializeField] private Button nearButton;
+        [SerializeField] private Text playerText;
+        [SerializeField] private List<Text> enemysTexts;
 
         // Use this for initialization
         void Start()
@@ -34,6 +41,34 @@ namespace AI.UI
             fixedButton.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Fixed).AddTo(this);
             farButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Far).AddTo(this);
             nearButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Near).AddTo(this);
+
+            Observable.EveryUpdate().Subscribe(_ =>
+            {
+                float playerHpPersent = player.Model.Hp / player.Model.MaxHp * 100f;
+                float playerMpPersent = player.Model.Mp / player.Model.MaxMp * 100f;
+                playerText.text = string.Format("Player\nHp : {0}%\nMp : {1}%", playerHpPersent, playerMpPersent);
+                for (int i = 0; i < enemysTexts.Count; i++)
+                {
+                    EnemyModel model = enemys[i].Model;
+                    float enemyHpPersent = model.Hp / model.MaxHp * 100f;
+                    float enemyMpPersent = model.Mp / model.MaxMp * 100f;
+                    enemysTexts[i].text = string.Format("Enemy{0}\n{1}\nHp : {2}%\nMp : {3}%\nPower : {4}\nSpeed : {5}\nSkill : {6}",
+                        i, BehaviorToString(enemys[i].Behavior), enemyHpPersent, enemyMpPersent, model.Power, model.Speed, model.Skill);
+                }
+            });
+        }
+
+        private string BehaviorToString(AIModel.Behavior behavior)
+        {
+            switch (behavior)
+            {
+                case AIModel.Behavior.Attack: return "攻撃中";
+                case AIModel.Behavior.Chase: return "追撃中";
+                case AIModel.Behavior.Escape: return "逃走中";
+                case AIModel.Behavior.Skill: return "スキル使用中";
+                case AIModel.Behavior.None: return "待機中";
+                default: return string.Empty;
+            }
         }
     }
 }
