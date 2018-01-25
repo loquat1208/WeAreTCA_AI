@@ -13,8 +13,13 @@
     <%= f.label :hp %>
     <%= f.number_field :hp, id: :enemy_hp %>
   </div>
- 
+
   <div class="field">
+    <%= f.label :mp %>
+    <%= f.number_field :mp, id: :enemy_mp %>
+  </div>
+  
+<div class="field">
     <%= f.label :skill %>
     <%= f.number_field :skill, id: :enemy_skill %>
   </div>
@@ -29,6 +34,7 @@
     </div>
   </div>
 
+  <%= enemy.power %>
   <div class="actions">
     <%= f.submit %>
   </div>

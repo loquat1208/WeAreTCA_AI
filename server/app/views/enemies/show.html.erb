@@ -1,19 +1,29 @@
-<p id="notice"><%= notice %></p>
+<% if notice %> 
+  <p id="notice"><%= notice %></p>
+  <p>
+    <strong>Power:</strong>
+    <%= @enemy.power %>
+  </p>
 
-<p>
-  <strong>Power:</strong>
-  <%= @enemy.power %>
-</p>
+  <p>
+    <strong>Speed:</strong>
+    <%= @enemy.speed %>
+  </p>
 
-<p>
-  <strong>Speed:</strong>
-  <%= @enemy.speed %>
-</p>
-
-<p>
-  <strong>Hp:</strong>
-  <%= @enemy.hp %>
-</p>
-
-<%= link_to 'Edit', edit_enemy_path(@enemy) %> |
-<%= link_to 'Back', enemies_path %>
+  <p>
+    <strong>Hp:</strong>
+    <%= @enemy.hp %>
+  </p>
+ 
+  <p>
+    <strong>Mp:</strong>
+    <%= @enemy.mp %>
+  </p>
+  <%= link_to 'Edit', edit_enemy_path(@enemy) %> |
+  <%= link_to 'Back', enemies_path %>
+<% else %>
+  <p>
+    <%= "power,speed,hp,mpの合計が100以下になるよう設定してください" %>
+  </p>
+  <%= link_to 'Edit', edit_enemy_path(@enemy) %>
+<% end %>

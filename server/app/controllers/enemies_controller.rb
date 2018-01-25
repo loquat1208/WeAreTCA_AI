@@ -1,6 +1,6 @@
 class EnemiesController < ApplicationController
   before_action :set_enemy, only: [:show, :edit, :update, :destroy]
-
+ 
   # GET /enemies
   # GET /enemies.json
   def index
@@ -25,15 +25,20 @@ class EnemiesController < ApplicationController
   # POST /enemies.json
   def create
     @enemy = Enemy.new(enemy_params)
-
     respond_to do |format|
-      if @enemy.save
+      if ( enemy_params[:hp].to_i + enemy_params[:mp].to_i + enemy_params[:speed].to_i + enemy_params[:power].to_i ) <= 100
+        @enemy.save(enemy_params)
         format.html { redirect_to @enemy, notice: 'Enemy was successfully created.' }
         format.json { render :show, status: :created, location: @enemy }
       else
-        format.html { render :new }
-        format.json { render json: @enemy.errors, status: :unprocessable_entity }
-      end
+          format.html { redirect_to @enemy, alert: 'hp,mp,power,speedの合計が100以下になるようにしてください' }
+          format.json { render :show, status: :ok, location: @enmey }
+          logger.debug(enemy_params[:hp])
+          logger.debug(enemy_params[:mp])
+          logger.debug(enemy_params[:power])
+          logger.debug(enemy_params[:speed])
+          logger.debug(( enemy_params[:hp].to_i + enemy_params[:mp].to_i + enemy_params[:speed].to_i + enemy_params[:power].to_i ))
+        end
     end
   end
 
@@ -41,13 +46,19 @@ class EnemiesController < ApplicationController
   # PATCH/PUT /enemies/1.json
   def update
     respond_to do |format|
-      if @enemy.update(enemy_params)
-        format.html { redirect_to @enemy, notice: 'Enemy was successfully updated.' }
-        format.json { render :show, status: :ok, location: @enemy }
-      else
-        format.html { render :edit }
-        format.json { render json: @enemy.errors, status: :unprocessable_entity }
-      end
+        if ( enemy_params[:hp].to_i + enemy_params[:mp].to_i + enemy_params[:speed].to_i + enemy_params[:power].to_i ) <= 100
+          @enemy.update(enemy_params)
+          format.html { redirect_to @enemy, notice: 'Enemy was successfully updated.' }
+          format.json { render :show, status: :ok, location: @enmey }
+        else
+          format.html { redirect_to @enemy, alert: 'hp,mp,power,speedの合計が100以下になるようにしてください' }
+          format.json { render :show, status: :ok, location: @enmey }
+          logger.debug(enemy_params[:hp])
+          logger.debug(enemy_params[:mp])
+ 	  logger.debug(enemy_params[:power])
+ 	  logger.debug(enemy_params[:speed])
+	  logger.debug(( enemy_params[:hp].to_i + enemy_params[:mp].to_i + enemy_params[:speed].to_i + enemy_params[:power].to_i ))
+        end
     end
   end
 
@@ -61,14 +72,21 @@ class EnemiesController < ApplicationController
     end
   end
 
+  def enemy_params
+    params.require(:enemy).permit(:power, :speed, :hp, :skill, :mp, actions_attributes: [:id, :execution, :character, :parameter, :value, :comparison, :action, :_destroy])
+  end
+
   private
+    def save_enemy
+      @enemy.save(enemy_params)
+    end
+    
+    def update_enemy
+      @enemy.update(enemy_params)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_enemy
       @enemy = Enemy.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def enemy_params
-      params.require(:enemy).permit(:power, :speed, :hp, :skill, actions_attributes: [:id, :execution, :character, :parameter, :value, :comparison, :action, :_destroy])
     end
 end
