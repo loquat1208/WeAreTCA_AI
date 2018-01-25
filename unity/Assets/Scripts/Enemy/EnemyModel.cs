@@ -35,5 +35,14 @@ namespace AI.Unit.Enemy
             Mp = MaxMp;
             Behaviors = behaviors;
         }
+
+        public void GetEnemyDate( ) 
+        {
+            
+           /* ServerConnect.Instance.GetJsonToDebug("api/enemies/", null, (data) => {
+                Hp = (float)data["hp"];
+                Mp = (float)data["mp"];
+            });*/
+        }
     }
 }

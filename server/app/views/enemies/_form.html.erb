@@ -21,7 +21,7 @@
   
 <div class="field">
     <%= f.label :skill %>
-    <%= f.number_field :skill, id: :enemy_skill %>
+    <%= f.select :skill, {"突進" => 0, "回復" => 1}, class: 'form-control' %>
   </div>
  
   <h3>Actions</h3>
@@ -34,7 +34,6 @@
     </div>
   </div>
 
-  <%= enemy.power %>
   <div class="actions">
     <%= f.submit %>
   </div>
