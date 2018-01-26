@@ -1,0 +1,18 @@
+サーバーの立ち上げ方
+windowsの場合
+	1.自身のOSのビット数を確認し　https://rubyinstaller.org/downloads/　からruby 2.2.6(x64であればx64)をダンロード、
+	2・上記のサイトの一番下にあるDevelopmentKitをダンロードこちらも自分のOSにあったものをダンロード
+	3・ 1でダンロードしたファイルを実行する、[rubyの実行ファイルへ環境変数PATHを設定する]にチェックをつけ、インストールする
+	4. 2でダンロードしたDevkitをCドライブ直下で解凍する
+	5. コマンドプロンプトを開き  ruby C:\DevKit\dk.rb init を実行する
+	6. コマンドプロンプトで　ruby C:\DevKit\dk.rb install　を実行する
+	7. コマンドプロンプトで gem install bundler　を実行する
+	8. コマンドプロンプトで gem install rails を実行する
+	9. コマンドプロンプトで WeAreTCA_AI/Serverに移動する
+	10. コマンドプロンプトで bundle install を実行する
+	11. コマンドプロンプトで rails server --binding=0.0.0.0　を実行する
+	12. Localhost:3000をインターネットエクスプローラのアドレス欄に打ち込む。
+	13. LAN接続している他のPCからアクセスする場合は、
+		ホスト(サーバー立ち上げ機)のIPアドレス:3000を入力する
+		例: 192.168.1.xx:3000
+		      ホストIP  + 3000  
