@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :enemies, only: [:index] do
       collection do
         get :actions
+        get :enemy
       end
     end
   end

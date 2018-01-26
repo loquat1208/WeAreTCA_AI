@@ -6,8 +6,8 @@ namespace AI.Behavior
     {
         public enum Type
         {
-            Heal,
             Dash,
+            Heal,
             None,
         }
 

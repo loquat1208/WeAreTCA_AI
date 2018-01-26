@@ -1,14 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Server\ServerConnect.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemy/EnemyModel.cs">
     <Files>
-      <File FileName="Assets\Scripts\Test.cs" Line="28" Column="4" />
-      <File FileName="Assets\Server\ServerConnect.cs" Line="26" Column="3" />
-      <File FileName="Assets\Scripts\Enemy\EnemyController.cs" Line="113" Column="3" />
+      <File FileName="Assets/Server/ServerConnect.cs" Line="35" Column="11" />
+      <File FileName="Assets/Scripts/Enemy/EnemyModel.cs" Line="55" Column="1" />
+      <File FileName="Assets/Scripts/Enemy/EnemyController.cs" Line="30" Column="19" />
+      <File FileName="Assets/Plugins/LitJSON/JsonData.cs" Line="427" Column="49" />
+      <File FileName="Assets/Scripts/Behavior/AI/AIModel.cs" Line="58" Column="1" />
+      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="106" Column="60" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/appirits_1010366/WeAreTCA_AI/unity/Assets/Scripts/Enemy/EnemyModel.cs" line="50" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -15,6 +15,20 @@ class Api::EnemiesController < ApplicationController
     end
     render json: hash 
   end
+ 
+  def enemy
+    hash = []
+    enemy = Enemy.find_by(id: params[:id])
+    hash << {
+      hp: enemy.hp,
+      mp: enemy.mp,
+      id: enemy.id,
+      speed: enemy.speed,
+      power: enemy.power,
+      skill: enemy.skill
+    }
+    render json: hash
+  end
 
   def actions
     @actions = Enemy.find_by(id: params[:enemy_id]).actions.all

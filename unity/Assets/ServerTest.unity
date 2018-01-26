@@ -1163,6 +1163,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 109.726006
       objectReference: {fileID: 0}
+    - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
@@ -1207,6 +1211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 2115068052}
+  server: {fileID: 0}
+  enemyId: 0
 --- !u!136 &204592956
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2149,6 +2155,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 445585883}
+--- !u!114 &474829913 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114816169394447122, guid: dc175f6ec8e904ccaa5d91d8a506ff73,
+    type: 2}
+  m_PrefabInternal: {fileID: 1404746927}
+  m_Script: {fileID: 11500000, guid: b4975df069104a941afd75afa6df6f93, type: 3}
 --- !u!1 &550198199
 GameObject:
   m_ObjectHideFlags: 0
@@ -3134,6 +3146,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 109.726006
       objectReference: {fileID: 0}
+    - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
@@ -3178,6 +3194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 1259120130}
+  server: {fileID: 0}
+  enemyId: 0
 --- !u!136 &831675817
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3587,6 +3605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 1501015915}
+  server: {fileID: 474829913}
+  enemyId: 1
 --- !u!195 &1083553089
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4361,6 +4381,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 109.726006
       objectReference: {fileID: 0}
+    - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
@@ -4405,6 +4429,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 1758505411}
+  server: {fileID: 0}
+  enemyId: 0
 --- !u!136 &1226154526
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7264,6 +7290,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 109.726006
       objectReference: {fileID: 0}
+    - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
@@ -7308,6 +7338,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 2090571865}
+  server: {fileID: 0}
+  enemyId: 0
 --- !u!136 &1549631428
 CapsuleCollider:
   m_ObjectHideFlags: 0
