@@ -35,17 +35,4 @@ ActiveRecord::Schema.define(version: 20180125013217) do
     t.integer "mp"
   end
 
-  create_table "enemy_actions", force: :cascade do |t|
-    t.integer "execution"
-    t.integer "character"
-    t.integer "parameter"
-    t.integer "value"
-    t.integer "comparison"
-    t.integer "action"
-    t.integer "enemy_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["enemy_id"], name: "index_enemy_actions_on_enemy_id"
-  end
-
 end

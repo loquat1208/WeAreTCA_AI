@@ -48,11 +48,35 @@ public class ServerConnect : MonoBehaviour {
                 callback(enemy);
             });
         });
-
     }
+
+	public void BuildEnemies(UnityAction<List<EnemyModel>> callback) {
+		string str = "api/enemies/";
+		GetJsonToDebug(str, (data) => {
+			List<EnemyModel> enemies = new List<EnemyModel>();
+			foreach(LitJson.JsonData json in data) {
+				int Hp = (int)json["hp"];
+				int Id = (int)json["id"];
+				int Mp = (int)json["mp"];
+				int Skill = (int)json["skill"];
+				int Power = (int)json["power"];
+				int Speed = (int)json["speed"];
+				GetEnemyAction(Id,(action) => {
+					List<AIModel>Behaviors = action;
+					EnemyModel enemy = new EnemyModel(Id, (float) Hp, (float)Mp, Power, Speed, (Skill.Type)Skill, Behaviors);
+					enemies.Add(enemy);
+					if(enemies.Count >= 5) {
+						callback(enemies);
+					}
+				});
+			};
+
+		});
+	}
+
     public void GetJsonToDebug( string url, UnityAction<LitJson.JsonData> callback = null) { 
 		var debugPrintStr = "url: " + url + "\n" + "type: GET";
-		Debug.unityLogger.Log(debugPrintStr);
+		Debug.Log(debugPrintStr);
         StartCoroutine(GetJSON(url, callback));
 	}
 
