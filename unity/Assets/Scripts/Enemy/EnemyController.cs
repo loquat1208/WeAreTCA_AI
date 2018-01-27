@@ -1,6 +1,7 @@
 ﻿using System;
 
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 using UniRx;
@@ -10,10 +11,11 @@ using AI.Unit.Player;
 
 namespace AI.Unit.Enemy
 {
-    // NOTE: 後リファトリング必要
+    // NOTE: 後リファトリング必要(Viewを作る、Interfaceを使用)
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private TargetView attackTrigger;
+        [SerializeField] private GameObject searchUI;
         //サーバーにアクセスできるため、サーバーをシングルトンにしなかった理由は同じクラスで同じコルーチーンを複数同時に展開できないから
         public EnemyModel Model { get; set; }
 
@@ -80,6 +82,12 @@ namespace AI.Unit.Enemy
 
                 Behavior = ai.GetBehavior;
             }
+        }
+
+        // NOTE: ここで書くのもじゃね！
+        public void SetSearchUI(bool trigger)
+        {
+            searchUI.SetActive(trigger);
         }
 
         private void OnAction()
