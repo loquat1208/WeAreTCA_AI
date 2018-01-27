@@ -15,9 +15,11 @@ namespace AI.Unit.Player
         [SerializeField] private PlayerView view;
 
         public PlayerModel Model { get; set; }
+        public Animator Anim { get { return GetComponent<Animator>(); } }
 
         private bool isAction = false;
-        public Animator Anim { get { return GetComponent<Animator>(); } }
+
+        private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
 
         void Start()
         {
@@ -57,7 +59,7 @@ namespace AI.Unit.Player
 
         private void OnMove(Vector3 dir)
         {
-            transform.Translate(new Vector3(0, 0, dir.z) * Model.Speed * Time.deltaTime);
+            rigid.velocity = transform.forward * dir.z * Model.Speed;
             transform.Rotate(new Vector3(0, dir.x, 0) * Model.RotateSpeed * Time.deltaTime);
             Anim.SetBool("param_idletorunning", true);
         }

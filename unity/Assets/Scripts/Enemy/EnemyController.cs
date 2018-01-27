@@ -18,13 +18,14 @@ namespace AI.Unit.Enemy
         [SerializeField] private GameObject searchUI;
         //サーバーにアクセスできるため、サーバーをシングルトンにしなかった理由は同じクラスで同じコルーチーンを複数同時に展開できないから
         public EnemyModel Model { get; set; }
+        public Animator Anim { get { return GetComponent<Animator>(); } }
+        public AIModel.Behavior Behavior { get; private set; }
 
         private Transform player;
         private NavMeshAgent nav;
 
-        public Animator Anim { get { return GetComponent<Animator>(); } }
+        private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
 
-        public AIModel.Behavior Behavior { get; private set; }
 
         private void Start()
         {
@@ -166,7 +167,7 @@ namespace AI.Unit.Enemy
             // NOTE: ずっとtrue, falseすること直したい
             Anim.SetBool("IsRun", true);
             Vector3 dir = Vector3.Normalize(transform.position - player.position);
-            transform.position += dir * Model.Speed * Time.deltaTime;
+            rigid.velocity = dir * Model.Speed;
             transform.localRotation = Quaternion.LookRotation(dir);
         }
 
