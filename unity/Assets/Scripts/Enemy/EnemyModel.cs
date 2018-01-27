@@ -9,8 +9,9 @@ namespace AI.Unit.Enemy
         public float MaxHp = 100;
         public float MaxMp = 100;
         public readonly double MpRecoveryTime = 10;
-        public readonly float SearchAngle = 60f;
+        public readonly float SearchAngle = 120f;
         public readonly float SearchLength = 10f;
+        public readonly float AttackLength = 2f;
         public int Power = 1;
         public int Speed = 1;
         public int Id;

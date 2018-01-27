@@ -1,7 +1,6 @@
 ﻿using System;
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.AI;
 
 using UniRx;
@@ -14,7 +13,6 @@ namespace AI.Unit.Enemy
     // NOTE: 後リファトリング必要(Viewを作る、Interfaceを使用)
     public class EnemyController : MonoBehaviour
     {
-        [SerializeField] private TargetView attackTrigger;
         [SerializeField] private GameObject searchUI;
         //サーバーにアクセスできるため、サーバーをシングルトンにしなかった理由は同じクラスで同じコルーチーンを複数同時に展開できないから
         public EnemyModel Model { get; set; }
@@ -23,6 +21,7 @@ namespace AI.Unit.Enemy
 
         private Transform player;
         private NavMeshAgent nav;
+        private RaycastHit hit;
 
         private Rigidbody rigid { get { return GetComponent<Rigidbody>(); } }
 
@@ -175,7 +174,7 @@ namespace AI.Unit.Enemy
         {
             OnChase();
 
-            if (attackTrigger.Target.Count > 0)
+            if (Vector3.Distance(transform.position, player.position) < Model.AttackLength && hit.transform != null && hit.transform.tag == "Player")
                 Anim.SetTrigger("IsAttack");
             PlayerController playerController = player.GetComponent<PlayerController>();
         }
@@ -188,7 +187,7 @@ namespace AI.Unit.Enemy
                     OnChase();
 
                     // NOTO: Skillクラスに移動する？
-                    if (attackTrigger.Target.Count > 0)
+                    if (Vector3.Distance(transform.position, player.position) < Model.AttackLength && hit.transform != null && hit.transform.tag == "Player")
                         Anim.SetTrigger("IsDash");
                     break;
                 case Skill.Type.Heal:
@@ -208,7 +207,6 @@ namespace AI.Unit.Enemy
                 if (angle > Model.SearchAngle * 0.5f)
                     return false;
 
-                RaycastHit hit;
                 Vector3 startPosition = transform.position + transform.up + transform.forward;
                 bool isHit = Physics.Raycast(startPosition, dirToPlayer, out hit, Model.SearchLength);
                 if (isHit && hit.transform.tag == "Player")
@@ -233,9 +231,8 @@ namespace AI.Unit.Enemy
         private void Dash()
         {
             PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null && attackTrigger.Target.Count > 0)
+            if (playerController != null && Vector3.Distance(transform.position, player.position) < Model.AttackLength && hit.transform != null && hit.transform.tag == "Player")
             {
-
                 playerController.Model.Hp -= Skill.DashPower;
                 Model.Mp -= Skill.DashMpCost;
                 player.GetComponent<PlayerController>().Anim.SetTrigger("param_idletodamage");

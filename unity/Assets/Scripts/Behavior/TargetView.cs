@@ -10,21 +10,15 @@ namespace AI.Unit
 
         public List<Collider> Target { get { return target; } private set { target = value; } }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
-            if (transform.parent.tag == "Player" && other.tag == "Enemy")
-                Target.Add(other);
-
-            if (transform.parent.tag == "Enemy" && other.tag == "Player")
+            if (other.tag == "Enemy" && !Target.Contains(other))
                 Target.Add(other);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (transform.parent.tag == "Player" && other.tag == "Enemy")
-                Target.Remove(other);
-
-            if (transform.parent.tag == "Enemy" && other.tag == "Player")
+            if (other.tag == "Enemy")
                 Target.Remove(other);
         }
     }
