@@ -42,6 +42,7 @@ namespace AI.Unit.Player
             Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
             {
                 Model.Mp += 1;
+                Model.Mp = Model.Mp > Model.MaxMp ? Model.MaxMp : Model.Mp;
             }).AddTo(this);
         }
 
@@ -93,6 +94,7 @@ namespace AI.Unit.Player
             {
                 Model.Mp -= Skill.HealMpCost;
                 Model.Hp += Skill.HealPower;
+                Model.Hp = Model.Hp > Model.MaxHp ? Model.MaxHp : Model.Hp;
             }
         }
 

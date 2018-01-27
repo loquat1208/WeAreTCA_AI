@@ -36,6 +36,7 @@ namespace AI.Unit.Enemy
             Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
             {
                 Model.Mp += 1;
+                Model.Mp = Model.Mp > Model.MaxMp ? Model.MaxMp : Model.Mp;
             }).AddTo(this);
 
             Observable.EveryUpdate().Subscribe(_ =>
@@ -55,27 +56,31 @@ namespace AI.Unit.Enemy
                 if (ai.GetSubject == AIModel.Subject.Player)
                 {
                     PlayerModel model = player.GetComponent<PlayerController>().Model;
+                    float hpPersent = model.Hp / model.MaxHp * 100f;
+                    float mpPersent = model.Mp / model.MaxMp * 100f;
                     if (ai.GetCriterion == AIModel.Criterion.Hp)
                     {
-                        if (model.Hp < ai.GetFrom || model.Hp > ai.GetTo)
+                        if (hpPersent < ai.GetFrom || hpPersent > ai.GetTo)
                             continue;
                     }
                     if (ai.GetCriterion == AIModel.Criterion.Mp)
                     {
-                        if (model.Mp < ai.GetFrom || model.Mp > ai.GetTo)
+                        if (mpPersent < ai.GetFrom || mpPersent > ai.GetTo)
                             continue;
                     }
                 }
                 if (ai.GetSubject == AIModel.Subject.Enemy)
                 {
+                    float hpPersent = Model.Hp / Model.MaxHp * 100f;
+                    float mpPersent = Model.Mp / Model.MaxMp * 100f;
                     if (ai.GetCriterion == AIModel.Criterion.Hp)
                     {
-                        if (Model.Hp < ai.GetFrom || Model.Hp > ai.GetTo)
+                        if (hpPersent < ai.GetFrom || hpPersent > ai.GetTo)
                             continue;
                     }
                     if (ai.GetCriterion == AIModel.Criterion.Mp)
                     {
-                        if (Model.Mp < ai.GetFrom || Model.Mp > ai.GetTo)
+                        if (mpPersent < ai.GetFrom || mpPersent > ai.GetTo)
                             continue;
                     }
                 }
@@ -217,6 +222,7 @@ namespace AI.Unit.Enemy
             {
                 Model.Mp -= Skill.HealMpCost;
                 Model.Hp += Skill.HealPower;
+                Model.Hp = Model.Hp > Model.MaxHp ? Model.MaxHp : Model.Hp;
             }
         }
 
