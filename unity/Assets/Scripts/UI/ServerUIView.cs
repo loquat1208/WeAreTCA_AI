@@ -68,7 +68,9 @@ namespace AI.UI
             {
                 case AIModel.Behavior.Attack: return "攻撃中";
                 case AIModel.Behavior.Chase: return "追撃中";
-                case AIModel.Behavior.Escape: return "逃走中";
+                case AIModel.Behavior.Escape15:
+                case AIModel.Behavior.Escape30:
+                case AIModel.Behavior.Escape45: return "逃走中";
                 case AIModel.Behavior.Skill: return "スキル使用中";
                 case AIModel.Behavior.None: return "待機中";
                 default: return string.Empty;

@@ -102,8 +102,14 @@ namespace AI.Unit.Enemy
                 case AIModel.Behavior.Attack:
                     OnAttack();
                     break;
-                case AIModel.Behavior.Escape:
-                    OnEscape();
+                case AIModel.Behavior.Escape15:
+                    OnEscape(15f);
+                    break;
+                case AIModel.Behavior.Escape30:
+                    OnEscape(30f);
+                    break;
+                case AIModel.Behavior.Escape45:
+                    OnEscape(45f);
                     break;
                 case AIModel.Behavior.Chase:
                     OnChase();
@@ -140,8 +146,14 @@ namespace AI.Unit.Enemy
             anim.SetBool("IsRun", false);
         }
 
-        private void OnEscape()
+        private void OnEscape(float length)
         {
+            if (Vector3.Distance(transform.position, player.position) > length)
+            {
+                OnStay();
+                return;
+            }
+
             // NOTE: ずっとtrue, falseすること直したい
             anim.SetBool("IsRun", true);
             Vector3 dir = Vector3.Normalize(transform.position - player.position);
