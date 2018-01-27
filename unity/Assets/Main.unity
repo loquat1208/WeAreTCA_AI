@@ -1276,8 +1276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 2115068052}
   searchUI: {fileID: 1773455268}
-  server: {fileID: 0}
-  enemyId: 0
 --- !u!136 &204592956
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1998,6 +1996,8 @@ GameObject:
   m_Component:
   - component: {fileID: 341357219}
   - component: {fileID: 341357220}
+  - component: {fileID: 341357222}
+  - component: {fileID: 341357221}
   m_Layer: 5
   m_Name: Status
   m_TagString: Untagged
@@ -2024,10 +2024,10 @@ RectTransform:
   m_Father: {fileID: 266205855}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &341357220
 MonoBehaviour:
@@ -2051,6 +2051,39 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &341357221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 341357218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &341357222
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 341357218}
 --- !u!1 &346478788
 GameObject:
   m_ObjectHideFlags: 0
@@ -3849,8 +3882,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 1259120130}
   searchUI: {fileID: 508500309}
-  server: {fileID: 0}
-  enemyId: 0
 --- !u!136 &831675817
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4406,8 +4437,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 1501015915}
   searchUI: {fileID: 1541121467}
-  server: {fileID: 0}
-  enemyId: 0
 --- !u!195 &1083553089
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4709,7 +4738,6 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -5295,8 +5323,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 1758505411}
   searchUI: {fileID: 1344781227}
-  server: {fileID: 0}
-  enemyId: 0
 --- !u!136 &1226154526
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8331,8 +8357,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTrigger: {fileID: 2090571865}
   searchUI: {fileID: 1917186664}
-  server: {fileID: 0}
-  enemyId: 0
 --- !u!136 &1549631428
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9382,7 +9406,6 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
