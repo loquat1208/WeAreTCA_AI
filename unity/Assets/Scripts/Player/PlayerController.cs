@@ -17,7 +17,7 @@ namespace AI.Unit.Player
         public PlayerModel Model { get; set; }
 
         private bool isAction = false;
-        private Animator anim { get { return GetComponent<Animator>(); } }
+        public Animator Anim { get { return GetComponent<Animator>(); } }
 
         void Start()
         {
@@ -43,7 +43,7 @@ namespace AI.Unit.Player
                 .Select(_ => Model.Hp)
                 .Where(hp => hp <= 0)
                 .First()
-                .Subscribe(_ => anim.SetTrigger("param_idletoko_big"))
+                .Subscribe(_ => Anim.SetTrigger("param_idletoko_big"))
                 .AddTo(this);
 
             Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime))
@@ -59,28 +59,28 @@ namespace AI.Unit.Player
         {
             transform.Translate(new Vector3(0, 0, dir.z) * Model.Speed * Time.deltaTime);
             transform.Rotate(new Vector3(0, dir.x, 0) * Model.RotateSpeed * Time.deltaTime);
-            anim.SetBool("param_idletorunning", true);
+            Anim.SetBool("param_idletorunning", true);
         }
 
         private void OnStay()
         {
-            anim.SetBool("param_idletorunning", false);
+            Anim.SetBool("param_idletorunning", false);
         }
 
         private void OnAttack()
         {
-            anim.SetTrigger("param_idletohit01");
+            Anim.SetTrigger("param_idletohit01");
         }
 
         private void OnHeal()
         {
-            anim.SetTrigger("param_idletowinpose");
+            Anim.SetTrigger("param_idletowinpose");
         }
 
         private void OnDash()
         {
             transform.position -= transform.forward * 2.7f;
-            anim.SetTrigger("param_idletohit03");
+            Anim.SetTrigger("param_idletohit03");
         }
 
         private void Dash()
@@ -92,7 +92,10 @@ namespace AI.Unit.Player
                     EnemyController enemy = x.GetComponent<EnemyController>();
                     Model.Mp -= Skill.DashMpCost;
                     if (enemy != null)
+                    {
                         enemy.Model.Hp -= Skill.DashPower;
+                        enemy.GetComponent<EnemyController>().Anim.SetTrigger("IsDamage");
+                    }
                 });
         }
 
@@ -116,7 +119,10 @@ namespace AI.Unit.Player
                 {
                     EnemyController enemy = x.GetComponent<EnemyController>();
                     if (enemy != null)
+                    {
                         enemy.Model.Hp -= Model.Power;
+                        enemy.GetComponent<EnemyController>().Anim.SetTrigger("IsDamage");
+                    }
                 });
         }
 

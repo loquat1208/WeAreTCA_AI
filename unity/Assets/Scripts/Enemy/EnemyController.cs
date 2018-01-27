@@ -22,7 +22,7 @@ namespace AI.Unit.Enemy
         private Transform player;
         private NavMeshAgent nav;
 
-        private Animator anim { get { return GetComponent<Animator>(); } }
+        public Animator Anim { get { return GetComponent<Animator>(); } }
 
         public AIModel.Behavior Behavior { get; private set; }
 
@@ -101,7 +101,7 @@ namespace AI.Unit.Enemy
             if (Model.Hp > 0)
                 return;
 
-            anim.SetTrigger("IsDeath");
+            Anim.SetTrigger("IsDeath");
         }
 
         private void OnAction()
@@ -142,7 +142,7 @@ namespace AI.Unit.Enemy
             }
 
             // NOTE: ずっとtrue, falseすること直したい
-            anim.SetBool("IsRun", true);
+            Anim.SetBool("IsRun", true);
             nav.isStopped = false;
             nav.SetDestination(player.position);
             nav.speed = Model.Speed;
@@ -152,7 +152,7 @@ namespace AI.Unit.Enemy
         {
             // NOTE: ずっとtrue, falseすること直したい
             nav.isStopped = true;
-            anim.SetBool("IsRun", false);
+            Anim.SetBool("IsRun", false);
         }
 
         private void OnEscape(float length)
@@ -164,7 +164,7 @@ namespace AI.Unit.Enemy
             }
 
             // NOTE: ずっとtrue, falseすること直したい
-            anim.SetBool("IsRun", true);
+            Anim.SetBool("IsRun", true);
             Vector3 dir = Vector3.Normalize(transform.position - player.position);
             transform.position += dir * Model.Speed * Time.deltaTime;
             transform.localRotation = Quaternion.LookRotation(dir);
@@ -175,7 +175,7 @@ namespace AI.Unit.Enemy
             OnChase();
 
             if (attackTrigger.Target.Count > 0)
-                anim.SetTrigger("IsAttack");
+                Anim.SetTrigger("IsAttack");
             PlayerController playerController = player.GetComponent<PlayerController>();
         }
 
@@ -188,10 +188,10 @@ namespace AI.Unit.Enemy
 
                     // NOTO: Skillクラスに移動する？
                     if (attackTrigger.Target.Count > 0)
-                        anim.SetTrigger("IsDash");
+                        Anim.SetTrigger("IsDash");
                     break;
                 case Skill.Type.Heal:
-                    anim.SetTrigger("IsHeal");
+                    Anim.SetTrigger("IsHeal");
                     break;
                 case Skill.Type.None:
                     break;
@@ -222,7 +222,10 @@ namespace AI.Unit.Enemy
         {
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (playerController != null)
+            {
                 playerController.Model.Hp -= Model.Power;
+                player.GetComponent<PlayerController>().Anim.SetTrigger("param_idletodamage");
+            }
         }
 
 
@@ -234,6 +237,7 @@ namespace AI.Unit.Enemy
 
                 playerController.Model.Hp -= Skill.DashPower;
                 Model.Mp -= Skill.DashMpCost;
+                player.GetComponent<PlayerController>().Anim.SetTrigger("param_idletodamage");
             }
         }
 
