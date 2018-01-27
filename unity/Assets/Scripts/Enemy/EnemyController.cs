@@ -43,6 +43,7 @@ namespace AI.Unit.Enemy
             {
                 SetBehavior();
                 OnAction();
+                CheckDeath();
             }).AddTo(this);
         }
 
@@ -93,6 +94,14 @@ namespace AI.Unit.Enemy
         public void SetSearchUI(bool trigger)
         {
             searchUI.SetActive(trigger);
+        }
+
+        private void CheckDeath()
+        {
+            if (Model.Hp > 0)
+                return;
+
+            anim.SetTrigger("IsDeath");
         }
 
         private void OnAction()
@@ -241,6 +250,11 @@ namespace AI.Unit.Enemy
         private void Rotate(float angle)
         {
             transform.Rotate(Vector3.up * angle);
+        }
+
+        private void Death()
+        {
+            Destroy(gameObject);
         }
     }
 }

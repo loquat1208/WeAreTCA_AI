@@ -39,11 +39,20 @@ namespace AI.Unit.Player
                 .Where(_ => Model.Mp > Skill.DashMpCost && view.AttackTrigger.Target.Count > 0)
                 .Subscribe(_ => OnDash()).AddTo(this);
 
-            Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime)).Subscribe(_ =>
-            {
-                Model.Mp += 1;
-                Model.Mp = Model.Mp > Model.MaxMp ? Model.MaxMp : Model.Mp;
-            }).AddTo(this);
+            Observable.EveryUpdate()
+                .Select(_ => Model.Hp)
+                .Where(hp => hp <= 0)
+                .First()
+                .Subscribe(_ => anim.SetTrigger("param_idletoko_big"))
+                .AddTo(this);
+
+            Observable.Interval(TimeSpan.FromSeconds(Model.MpRecoveryTime))
+                .Where(hp => hp > 0)
+                .Subscribe(_ =>
+                {
+                    Model.Mp += 1;
+                    Model.Mp = Model.Mp > Model.MaxMp ? Model.MaxMp : Model.Mp;
+                }).AddTo(this);
         }
 
         private void OnMove(Vector3 dir)
@@ -109,6 +118,11 @@ namespace AI.Unit.Player
                     if (enemy != null)
                         enemy.Model.Hp -= Model.Power;
                 });
+        }
+
+        private void Death()
+        {
+            Destroy(gameObject);
         }
 
         private void ActionEnd()
