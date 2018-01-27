@@ -15,9 +15,6 @@ namespace AI.Unit.Enemy
     {
         [SerializeField] private TargetView attackTrigger;
         //サーバーにアクセスできるため、サーバーをシングルトンにしなかった理由は同じクラスで同じコルーチーンを複数同時に展開できないから
-        [SerializeField] private ServerConnect server;
-        //サーバーからデータを引っ張るためのエネミーID, 1~5
-        [SerializeField] private int enemyId;
         public EnemyModel Model { get; set; }
 
         private Transform player;
@@ -30,25 +27,6 @@ namespace AI.Unit.Enemy
         private void Start()
         {
             Model = new EnemyModel();
-            //サーバー環境がないときのため
-            if(server != null){
-                server.BuildEnemy(enemyId, (data) => {
-                    Model = data;
-                    //テストのためのデバッグログ
-                    Debug.Log("ID" + Model.Id);
-                    Debug.Log("HP" + Model.Hp);
-                    Debug.Log("Speed" + Model.Speed);
-                    Debug.Log("Power" + Model.Power);
-                    Debug.Log("Skill" + Model.Skill);
-                    foreach(var action in Model.Behaviors){
-                        Debug.Log("Subject" + action.GetSubject);
-                        Debug.Log("criterion" + action.GetCriterion);
-                        Debug.Log("from" + action.GetFrom);
-                        Debug.Log("to" + action.GetTo);
-                        Debug.Log("behavior" + action.GetBehavior);
-                    }
-                });
-            }
             player = GameObject.FindGameObjectWithTag("Player").transform;
             nav = GetComponent<NavMeshAgent>();
             nav.stoppingDistance = 1.5f;
