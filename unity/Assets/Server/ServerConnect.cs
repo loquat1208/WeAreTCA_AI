@@ -9,7 +9,7 @@ public class ServerConnect : MonoBehaviour {
 	
     public delegate void Callback(LitJson.JsonData json);
 
-	string railsServer = "http://localhost:3000/";
+	string railsServer = "http://172.18.10.109:3000/";
    
     private void GetEnemyAction(int enemy_id, UnityAction<List<AIModel>> callback){
         string url = "api/enemies/actions?enemy_id=" + enemy_id;
