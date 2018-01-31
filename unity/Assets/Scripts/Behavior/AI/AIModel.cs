@@ -6,11 +6,11 @@
         public enum Behavior
         {
             Attack,
+            Skill,
             Escape15,
             Escape30,
             Escape45,
             Chase,
-            Skill,
             None,
         }
 
