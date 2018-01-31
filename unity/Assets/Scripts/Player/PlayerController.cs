@@ -88,17 +88,8 @@ namespace AI.Unit.Player
         private void Dash()
         {
             isAction = true;
-            view.AttackTrigger.Target
-                .ForEach(x =>
-                {
-                    EnemyController enemy = x.GetComponent<EnemyController>();
-                    Model.Mp -= Skill.DashMpCost;
-                    if (enemy != null)
-                    {
-                        enemy.Model.Hp -= Skill.DashPower;
-                        enemy.GetComponent<EnemyController>().Anim.SetTrigger("IsDamage");
-                    }
-                });
+            Model.Mp -= Skill.DashMpCost;
+            EnemyDamaged(Skill.DashPower);
         }
 
         private void Heal()
@@ -116,14 +107,22 @@ namespace AI.Unit.Player
         private void Attack()
         {
             isAction = true;
+            EnemyDamaged(Model.Power);
+        }
+
+        private void EnemyDamaged(int damage)
+        {
             view.AttackTrigger.Target
                 .ForEach(x =>
                 {
                     EnemyController enemy = x.GetComponent<EnemyController>();
                     if (enemy != null)
                     {
-                        enemy.Model.Hp -= Model.Power;
+                        enemy.Model.Hp -= damage;
                         enemy.GetComponent<EnemyController>().Anim.SetTrigger("IsDamage");
+                        Vector3 dir = Vector3.Normalize(transform.position - enemy.transform.position);
+                        enemy.transform.localRotation = Quaternion.LookRotation(dir);
+
                     }
                 });
         }
