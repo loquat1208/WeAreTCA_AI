@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 using AI.System;
@@ -28,23 +28,37 @@ namespace AI.UI
         [SerializeField] private Button nearButton;
         [SerializeField] private Button enemySearchUIOnButton;
         [SerializeField] private Button enemySearchUIOffButton;
+        [SerializeField] private Button resetKey;
         [SerializeField] private Text playerText;
         [SerializeField] private List<Text> enemysTexts;
 
         // Use this for initialization
         void Start()
         {
-            playerButton.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Player).AddTo(this);
-            enemy1Button.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy1).AddTo(this);
-            enemy2Button.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy2).AddTo(this);
-            enemy3Button.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy3).AddTo(this);
-            enemy4Button.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy4).AddTo(this);
-            enemy5Button.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy5).AddTo(this);
+            playerButton.OnClickAsObservable().Where(_ => player != null).Subscribe(_ => serverCamera.State = ServerCamera.STATE.Player).AddTo(this);
+            enemy1Button.OnClickAsObservable().Where(_ => enemys[0] != null).Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy1).AddTo(this);
+            enemy2Button.OnClickAsObservable().Where(_ => enemys[1] != null).Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy2).AddTo(this);
+            enemy3Button.OnClickAsObservable().Where(_ => enemys[2] != null).Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy3).AddTo(this);
+            enemy4Button.OnClickAsObservable().Where(_ => enemys[3] != null).Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy4).AddTo(this);
+            enemy5Button.OnClickAsObservable().Where(_ => enemys[4] != null).Subscribe(_ => serverCamera.State = ServerCamera.STATE.Enemy5).AddTo(this);
             fixedButton.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Fixed).AddTo(this);
             farButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Far).AddTo(this);
             nearButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Near).AddTo(this);
+<<<<<<< HEAD
             enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(true))).AddTo(this);
             enemySearchUIOffButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(false))).AddTo(this);
+            resetKey.OnClickAsObservable().Subscribe(_ => SceneManager.LoadScene("Main")).AddTo(this);
+=======
+            enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x =>
+            {
+                if (x != null) x.SetSearchUI(true);
+            })).AddTo(this);
+            enemySearchUIOffButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x =>
+            {
+                if (x != null)
+                x.SetSearchUI(false);
+            })).AddTo(this);
+>>>>>>> 19854c89709b171931a8680de64da2e7844d3601
 
             Observable.EveryUpdate().Subscribe(_ =>
             {
