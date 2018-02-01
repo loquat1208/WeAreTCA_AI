@@ -44,11 +44,9 @@ namespace AI.UI
             fixedButton.OnClickAsObservable().Subscribe(_ => serverCamera.State = ServerCamera.STATE.Fixed).AddTo(this);
             farButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Far).AddTo(this);
             nearButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Near).AddTo(this);
-<<<<<<< HEAD
             enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(true))).AddTo(this);
             enemySearchUIOffButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(false))).AddTo(this);
             resetKey.OnClickAsObservable().Subscribe(_ => SceneManager.LoadScene("Main")).AddTo(this);
-=======
             enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x =>
             {
                 if (x != null) x.SetSearchUI(true);
@@ -58,7 +56,6 @@ namespace AI.UI
                 if (x != null)
                 x.SetSearchUI(false);
             })).AddTo(this);
->>>>>>> 19854c89709b171931a8680de64da2e7844d3601
 
             Observable.EveryUpdate().Subscribe(_ =>
             {
