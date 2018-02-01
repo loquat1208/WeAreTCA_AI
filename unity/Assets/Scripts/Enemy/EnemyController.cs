@@ -264,7 +264,7 @@ namespace AI.Unit.Enemy
 
         private void Rotate(float angle)
         {
-            transform.Rotate(Vector3.up * angle);
+            transform.Rotate(Vector3.up * UnityEngine.Random.Range(-angle, angle));
         }
 
         private void Death()

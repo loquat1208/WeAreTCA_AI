@@ -38159,76 +38159,76 @@ AnimationClip:
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
   - time: 1
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 1.5
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 30
     intParameter: 0
     messageOptions: 0
   - time: 2
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
   - time: 2.5
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 3
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 30
     intParameter: 0
     messageOptions: 0
   - time: 3.5
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 4
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
   - time: 4.5
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 30
     intParameter: 0
     messageOptions: 0
   - time: 5
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 10
     intParameter: 0
     messageOptions: 0
   - time: 5.5
     functionName: Rotate
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 2.5
+    floatParameter: 20
     intParameter: 0
     messageOptions: 0
