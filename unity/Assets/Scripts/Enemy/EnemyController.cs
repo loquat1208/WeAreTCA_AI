@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 using UniRx;
 
@@ -14,10 +15,12 @@ namespace AI.Unit.Enemy
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private GameObject searchUI;
+        [SerializeField] private GameObject Panel;
         //サーバーにアクセスできるため、サーバーをシングルトンにしなかった理由は同じクラスで同じコルーチーンを複数同時に展開できないから
         public EnemyModel Model { get; set; }
         public Animator Anim { get { return GetComponent<Animator>(); } }
         public AIModel.Behavior Behavior { get; private set; }
+        public AIModel AI { get; private set; }
 
         private Transform player;
         private NavMeshAgent nav;
@@ -87,6 +90,7 @@ namespace AI.Unit.Enemy
                 }
 
                 Behavior = ai.GetBehavior;
+                AI = ai;
             }
         }
 
@@ -109,21 +113,27 @@ namespace AI.Unit.Enemy
             switch(Behavior)
             {
                 case AIModel.Behavior.Attack:
+                    Panel.GetComponentInChildren<Text>().text = string.Format("{0}の{1}が\n{2}以上{3}以下\n攻撃", AI.GetSubject, AI.GetCriterion, AI.GetFrom, AI.GetTo);
                     OnAttack();
                     break;
                 case AIModel.Behavior.Escape15:
+                    Panel.GetComponentInChildren<Text>().text = string.Format("{0}の{1}が\n{2}以上{3}以下\n逃走", AI.GetSubject, AI.GetCriterion, AI.GetFrom, AI.GetTo);
                     OnEscape(15f);
                     break;
                 case AIModel.Behavior.Escape30:
+                    Panel.GetComponentInChildren<Text>().text = string.Format("{0}の{1}が\n{2}以上{3}以下\n逃走", AI.GetSubject, AI.GetCriterion, AI.GetFrom, AI.GetTo);
                     OnEscape(30f);
                     break;
                 case AIModel.Behavior.Escape45:
+                    Panel.GetComponentInChildren<Text>().text = string.Format("{0}の{1}が\n{2}以上{3}以下\n逃走", AI.GetSubject, AI.GetCriterion, AI.GetFrom, AI.GetTo);
                     OnEscape(45f);
                     break;
                 case AIModel.Behavior.Chase:
+                    Panel.GetComponentInChildren<Text>().text = "追撃中";
                     OnChase();
                     break;
                 case AIModel.Behavior.Skill:
+                    Panel.GetComponentInChildren<Text>().text = string.Format("{0}の{1}が\n{2}以上{3}以下\nスキル", AI.GetSubject, AI.GetCriterion, AI.GetFrom, AI.GetTo);
                     OnSkill();
                     break;
                 case AIModel.Behavior.None:
@@ -219,6 +229,7 @@ namespace AI.Unit.Enemy
         // NOTE: AnimationEvent
         private void Attack()
         {
+            Panel.GetComponentInChildren<Image>().color = Color.red;
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (playerController != null)
             {
@@ -230,6 +241,7 @@ namespace AI.Unit.Enemy
 
         private void Dash()
         {
+            Panel.GetComponentInChildren<Image>().color = Color.red;
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (playerController != null && Vector3.Distance(transform.position, player.position) < Model.AttackLength && hit.transform != null && hit.transform.tag == "Player")
             {
@@ -241,6 +253,7 @@ namespace AI.Unit.Enemy
 
         private void Heal()
         {
+            Panel.GetComponentInChildren<Image>().color = Color.red;
             if (Model.Mp > Skill.HealMpCost)
             {
                 Model.Mp -= Skill.HealMpCost;
@@ -257,6 +270,11 @@ namespace AI.Unit.Enemy
         private void Death()
         {
             Destroy(gameObject);
+        }
+
+        private void StartAction()
+        {
+            Panel.GetComponentInChildren<Image>().color = Color.green;
         }
     }
 }

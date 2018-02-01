@@ -23,7 +23,7 @@ namespace AI.Unit.Enemy
 
         public EnemyModel()
         {
-            Skill = Behavior.Skill.Type.Dash;
+            Skill = Behavior.Skill.Type.Heal;
             Hp = MaxHp;
             Mp = MaxMp;
             Behaviors.Add(new AIModel(AIModel.Subject.Enemy, AIModel.Criterion.Hp, 0, 100, AIModel.Behavior.Attack));

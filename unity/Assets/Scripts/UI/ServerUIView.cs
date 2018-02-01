@@ -46,6 +46,7 @@ namespace AI.UI
             nearButton.OnClickAsObservable().Subscribe(_ => serverCamera.Distance = ServerCamera.DISTANCE.Near).AddTo(this);
             enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(true))).AddTo(this);
             enemySearchUIOffButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x => x.SetSearchUI(false))).AddTo(this);
+            
             resetKey.OnClickAsObservable().Subscribe(_ => SceneManager.LoadScene("Main")).AddTo(this);
             enemySearchUIOnButton.OnClickAsObservable().Subscribe(_ => enemys.ForEach(x =>
             {

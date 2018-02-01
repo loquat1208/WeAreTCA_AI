@@ -36906,8 +36906,22 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 1.0666667
+  - time: 0
+    functionName: StartAction
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
     functionName: Heal
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1
+    functionName: StartAction
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
